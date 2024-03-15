@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <base href="">
+    <meta charset="utf-8" />
+    <title>Oasis Bus Management System</title>
+    <meta name="description" content="Oasis -XF Application" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+    <!--ppvue -->
+    <script src="/ppvue.js"></script>
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend:300,400,500,600,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" />
+    <!--end::Fonts-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/ot.style.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/custom.ot.css" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+    <!--xls filesaver-->
+    <script type="text/javascript" src="/assets/js/xlsx_shim.min.js"></script>
+    <script type="text/javascript" src="/assets/js/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="/assets/js/FileSaver_1_3_3.js"></script>
+
+
+    <!--caleandar-->
+    <link rel="stylesheet" href="/assets/css/calean1.css" />
+    <!--kurko calendar-->
+    <link rel="stylesheet" href="/assets/css/eventcalendar.min.css">
+    <script src="/assets/js/eventcalendar155.min.js"></script>
+    <style>
+        .mh40vh {
+            max-height: 40vh !important;
+            overflow-y: auto;
+        }
+
+        .cursor-pointer {
+            cursor: pointer !important;
+        }
+    </style>
+</head>
+
+<!--begin::Body-->
+<body data-kt-app-layout="light-sidebar" data-kt-app-sidebar-enabled="true" data-kt-app-sidebar-fixed="true" data-kt-app-sidebar-push-header="true"
+      data-kt-app-sidebar-push-toolbar="true" data-kt-app-sidebar-push-footer="true" class="app-default">
+
+    <!--begin::Theme mode setup on page load-->
+    <script src="/assets/js/custom.js"></script>
+
+
+    <div v-scope v-cloak>
+
+
+        <!--begin::LOGIN-->
+        <div id="xf_div_login" v-if="!xa.jwt">
+
+            <div class="d-flex flex-column flex-root vh-100 bg-pattern1">
+                <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+                    <div class="d-flex flex-column flex-lg-row-fluid">
+                        <div class="d-flex flex-row-fluid flex-center flex-column-auto flex-column text-center py-8">
+                            <a href="index.html" class="mb-6">
+                                <img alt="Logo" src="/assets/media/logos/oasis_logo.png" class="h-60px h-lg-150px">
+                            </a>
+                            <div class="fs-2x text-gray-200 h4 w-400px">
+                                Bus Management System
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-row-fluid d-flex flex-center justify-content-xl-first p-10">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-center p-lg-10 p-sm-4 bg-body shadow-sm w-100 w-md-550px mx-auto ms-xl-20 bg-pattern2 rounded">
+                            <!--begin::Form-->
+                            <div class="login-content flex-lg-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-0 mx-auto mw-450px w-100">
+                                <div class="d-flex flex-column-fluid flex-center py-2">
+                                    <div class="w-100">
+                                        <div class="pb-2 pb-lg-6">
+                                            <h3 class="fw-bolder display-6 mb-0">Welcome</h3>
+                                            <div class="text-light lexend fw-light small">
+                                                Version: {{xfversion}}
+                                            </div>
+                                        </div>
+
+                                        <!--Login controls-->
+                                        <div>
+                                            <div v-if="!xa.mode">
+                                                <div class="mb-6">
+                                                    <label class="form-label fs-6 fw-bolder">User Name</label>
+                                                    <input class="form-control form-control-lg form-control-solid" type="text" name="username" v-model="xa.username">
+                                                </div>
+
+                                                <div class="mb-6">
+                                                    <div class="d-flex justify-content-between mt-n5">
+                                                        <label class="form-label fs-6 fw-bolder pt-5">Password</label>
+                                                    </div>
+                                                    <input class="form-control form-control-lg form-control-solid" type="password" name="password" v-model="xa.p1">
+                                                </div>
+
+                                                <div class="pb-lg-2 pb-5">
+                                                    <button type="button" class="btn btn-dark btn-lg fw-bold fs-6 px-8 py-4 my-3 me-3 w-100" v-on:click="sign_in()">Sign In</button>
+                                                </div>
+                                            </div>
+                                            <!--Reset Password controls-->
+                                            <div v-if="xa.mode==1">
+                                                <div class="mb-6">
+                                                    <label class="form-label fs-6 fw-bolder">New Password</label>
+                                                    <input class="form-control form-control-lg form-control-solid" type="password" name="password" v-model="xa.p1">
+                                                </div>
+
+                                                <div class="mb-10">
+                                                    <div class="d-flex justify-content-between mt-n5">
+                                                        <label class="form-label fs-6 fw-bolder text-dark pt-5">Re-enter Password</label>
+                                                    </div>
+                                                    <input class="form-control form-control-lg form-control-solid" type="password" name="password" v-model="xa.p2">
+                                                </div>
+                                                <div class="pb-lg-0 pb-5">
+                                                    <button v-if="xa.p1==xa.p2 && xa.p2" type="button" class="btn btn-primary fw-bolder fs-6 px-8 py-4 my-3 me-3 w-100" v-on:click="signin_reset()">Reset</button>
+                                                    <button v-else type="button" class="btn btn-primary fw-bolder fs-6 px-8 py-4 my-3 me-3 w-100" disabled>Reset</button>
+                                                </div>
+                                            </div>
+                                            <div v-if="xa.mode==2">
+                                                <div class="mb-6">
+                                                    <label class="form-label fs-6 fw-bolder">Password Changed Successfully!</label>
+                                                </div>
+                                                <div class="pb-lg-0 pb-5">
+                                                    <button type="button" class="btn btn-primary fw-bolder fs-6 px-8 py-4 my-3 me-3 w-100" v-on:click="xa.mode=0;xa.id=0;xa.username='';xa.p1='';">Continue</button>
+                                                </div>
+                                            </div>
+                                            <div v-if="xa.e" class="text-danger fw-bold mt-4">{{xa.ex}}</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::LOGIN-->
+
+        <div id="xf_div_app" v-bind:class="[xa.id && xa.jwt ? '':'d-none']">
+
+            <!--begin::App-->
+            <div class="d-flex flex-column flex-root app-root vh-100 bg-pattern2">
+                <div class="app-page flex-column flex-column-fluid">
+                    <!--Wrapper-->
+                    <div class="app-wrapper flex-column flex-row-fluid">
+                        <!--begin::sidebar-->
+                        <div id="kt_app_sidebar" class="app-sidebar flex-column shadow shadow-xs opacity-75 d-print-none" data-kt-drawer="true" data-kt-drawer-name="app-sidebar"
+                             data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="250px"
+                             data-kt-drawer-direction="start" data-kt-drawer-toggle="#app_sidebar_mobile_toggle">
+                            <!--background-color:#ffe99a-->
+                            <!--begin::Logo-->
+                            <div class="app-sidebar-logo d-none d-lg-flex flex-stack flex-shrink-0 px-4 justify-content-between" id="kt_app_sidebar_logo">
+                                <!--begin::Logo image-->
+                                <div>
+                                    <img alt="Logo" src="/assets/media/logos/oasis_logo.png" class="theme-light-show h-60px" />
+                                    <img alt="Logo" src="/assets/media/logos/oasis_logo.png" class="theme-dark-show h-60px" />
+                                </div>
+                                <!--end::Logo image-->
+                                <!--global search-->
+                                <div class="btn btn-icon btn-active-danger btn-hover-scale" data-bs-toggle="modal" data-bs-target="#xf_search_modal" v-on:click="xqry()">
+                                    <i class="bi bi-search"></i>
+                                </div>
+                            </div>
+                            <!--end::Logo-->
+                            <div class="separator d-none d-lg-block"></div>
+
+                            <!--begin::Sidebar menu-->
+                            <div class="app-sidebar-menu app-sidebar-menu-arrow hover-scroll-overlay-y my-5 my-lg-5 px-3" id="kt_app_sidebar_menu_wrapper" data-kt-scroll="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_sidebar_toolbar, #kt_app_sidebar_footer" data-kt-scroll-offset="0">
+                                <!--begin::Menu-->
+                                <div class="menu menu-column menu-sub-indention menu-active-bg fw-semibold" id="#kt_sidebar_menu" data-kt-menu="true">
+
+                                    <div class="menu-item">
+                                        <span class="menu-link py-1" v-on:click="init('ot_tripallocation')">
+                                            <span class="menu-icon">
+                                                <i class="bi bi-columns-gap text-warning"></i>
+                                            </span>
+                                            <span class="menu-title">Trip Allocation</span>
+                                        </span>
+                                    </div>
+
+
+                                    <div class="menu-item" v-on:click="q_gl_hdr='Booking';xqry('','ot_booking','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                        <div class="menu-link py-1">
+                                            <span class="menu-icon">
+                                                <i class="bi bi-search text-info"></i>
+                                            </span>
+                                            <span class="menu-title">Search Bookings</span>
+                                        </div>
+                                    </div>
+                                    <div class="menu-item" v-on:click="init('ot_booking',-1,'ot_booking_v1')">
+                                        <div class="menu-link py-1">
+                                            <span class="menu-icon">
+                                                <i class="bi bi-plus text-primary"></i>
+                                            </span>
+                                            <span class="menu-title">New Booking</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="menu-item pt-5">
+                                        <div class="menu-content">
+                                            <span class="menu-heading fw-bold text-uppercase fs-7">Menu</span>
+                                        </div>
+                                    </div>
+
+
+                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion" @vue:mounted="xfm_list()">
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="bi bi-graph-up-arrow text-danger"></i>
+                                            </span>
+                                            <span class="menu-title">Reports</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+
+                                        <div class="menu-sub menu-sub-accordion">
+                                            <div class="menu-item" v-for="A in xfm.bx.filter(b=>b.objectname.startsWith('ot_rep'))">
+                                                <span class="menu-link py-1" v-on:click="init_newtab('reports',A.objectname,-1,true)">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">{{A.header}}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="menu-item">
+                                        <span class="menu-link py-1" v-on:click="init('ot_tour_scheduler')">
+                                            <span class="menu-icon">
+                                                <i class="bi bi-telephone text-primary"></i>
+                                            </span>
+                                            <span class="menu-title">Trips Schedule</span>
+                                        </span>
+                                    </div>
+
+
+                                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+
+                                        <span class="menu-link">
+                                            <span class="menu-icon">
+                                                <i class="bi bi-stack text-warning"></i>
+                                            </span>
+                                            <span class="menu-title">Master Data</span>
+                                            <span class="menu-arrow"></span>
+                                        </span>
+
+
+                                        <div class="menu-sub menu-sub-accordion">
+
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="q_gl_hdr='Tour';xqry('','ot_tour','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">Tours</span>
+                                                </span>
+                                            </div>
+
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="init('ot_tour')">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">Create New Tour</span>
+                                                </span>
+                                            </div>
+
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="q_gl_hdr='Pickup Time';xqry('','ot_pickuptime','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">Pickup Time</span>
+                                                </span>
+                                            </div>
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="q_gl_hdr='Pickup Location';xqry('','ot_pickuploc','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">Pickup Locations</span>
+                                                </span>
+                                            </div>
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="q_gl_hdr='Pickup Zone';xqry('','ot_pickupzone','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">Pickup Zones</span>
+                                                </span>
+                                            </div>
+
+
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="q_gl_hdr='Driver';xqry('','ot_driver','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">Driver</span>
+                                                </span>
+                                            </div>
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="q_gl_hdr='Vehicle';xqry('','ot_vehicle','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">Vehicle</span>
+                                                </span>
+                                            </div>
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="q_gl_hdr='Vehicle Category';xqry('','ot_vehcat','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">Vehicle Category</span>
+                                                </span>
+                                            </div>
+
+
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="q_gl_hdr='Sales Representative';xqry('','ot_salesrep','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">Sales Rep</span>
+                                                </span>
+                                            </div>
+                                            <div class="menu-item">
+                                                <span class="menu-link py-1" v-on:click="q_gl_hdr='Sales Rep - Tour';xqry('','ot_salesrep_tour','entity')" data-bs-toggle="modal" data-bs-target="#xf_search_modal">
+                                                    <span class="menu-bullet">
+                                                        <span class="bullet bullet-vertical"></span>
+                                                    </span>
+                                                    <span class="menu-title">SalesRep-Tour Commission</span>
+                                                </span>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <!--end::Menu-->
+                            </div>
+                            <!--end::Sidebar menu-->
+                            <!--begin::User-->
+                            <div class="app-sidebar-user d-flex flex-stack py-5 px-8">
+                                <!--begin::User avatar-->
+                                <div class="d-flex me-2">
+                                    <!--begin::Menu wrapper-->
+                                    <div class="me-5">
+                                        <!--begin::Symbol-->
+                                        <div class="btn btn-active-danger btn-warning btn-icon" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" data-kt-menu-overflow="true">
+                                            <i class="bi bi-person fs-2x"></i>
+                                        </div>
+                                        <!--end::Symbol-->
+                                        <!--begin::User account menu-->
+                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 w-275px" data-kt-menu="true">
+
+                                            <div class="menu-item px-3 py-0">
+                                                <div class="menu-content d-flex align-items-center px-0">
+                                                    <!--begin::Avatar-->
+                                                    <div class="symbol symbol-50px me-5">
+                                                        <img alt="Logo" src="/assets/media/avatars/mountain.jpg" />
+                                                    </div>
+                                                    <!--end::Avatar-->
+                                                    <!--begin::Username-->
+                                                    <div>
+                                                        <div>Hi,</div>
+                                                        <div class="small">{{xa.userfullname}}</div>
+                                                    </div>
+                                                    <!--end::Username-->
+                                                </div>
+                                            </div>
+
+
+                                            <!--begin::Menu separator-->
+                                            <div class="separator my-2"></div>
+                                            <!--end::Menu separator-->
+                                            <div data-kt-element="theme-mode-menu">
+                                                <div class="menu-item">
+                                                    <span class="menu-link" data-kt-element="mode" data-kt-value="light">
+                                                        <i class="bi bi-sun me-4"></i>
+                                                        <span class="small">Theme - Light</span>
+                                                    </span>
+                                                </div>
+
+                                                <div class="menu-item" data-kt-element="theme-mode-menu">
+                                                    <span class="menu-link" data-kt-element="mode" data-kt-value="dark">
+                                                        <i class="bi bi-moon me-4"></i>
+                                                        <span class="small">Dark Theme</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="menu-item" v-on:click="resetpw()">
+                                                <span class="menu-link">
+                                                    <i class="bi bi-unlock me-4"></i>
+                                                    <span class="small text-gray-400">Change Password</span>
+                                                </span>
+                                            </div>
+                                            <div class="menu-item" v-on:click="logout()">
+                                                <span class="menu-link">
+                                                    <i class="bi bi-x-square me-4"></i>
+                                                    <span class="small text-danger">Sign Out</span>
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                        <!--end::User account menu-->
+                                    </div>
+                                    <!--end::Menu wrapper-->
+                                    <!--begin::Info-->
+                                    <div class="d-flex align-items-center">
+                                        <!--begin::Username-->
+                                        <span class="app-sidebar-username text-gray-600 small fw-bold">{{xa.userfullname}}</span>
+                                        <!--end::Username-->
+                                    </div>
+                                    <!--end::Info-->
+                                </div>
+                                <!--end::User avatar-->
+                                <!--begin::Action-->
+                                <a v-on:click="logout()" class="btn btn-icon btn-active-color-primary btn-icon-custom-color me-n4" data-bs-toggle="tooltip" title="End Session and Signout">
+                                    <!--begin::Svg Icon | path: icons/duotune/arrows/arr076.svg-->
+                                    <span class="svg-icon svg-icon-2 svg-icon-gray-400">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect opacity="0.3" width="12" height="2" rx="1" transform="matrix(-1 0 0 1 15.5 11)" fill="currentColor" />
+                                            <path d="M13.6313 11.6927L11.8756 10.2297C11.4054 9.83785 11.3732 9.12683 11.806 8.69401C12.1957 8.3043 12.8216 8.28591 13.2336 8.65206L16.1592 11.2526C16.6067 11.6504 16.6067 12.3496 16.1592 12.7474L13.2336 15.3479C12.8216 15.7141 12.1957 15.6957 11.806 15.306C11.3732 14.8732 11.4054 14.1621 11.8756 13.7703L13.6313 12.3073C13.8232 12.1474 13.8232 11.8526 13.6313 11.6927Z" fill="currentColor" />
+                                            <path d="M8 5V6C8 6.55228 8.44772 7 9 7C9.55228 7 10 6.55228 10 6C10 5.44772 10.4477 5 11 5H18C18.5523 5 19 5.44772 19 6V18C19 18.5523 18.5523 19 18 19H11C10.4477 19 10 18.5523 10 18C10 17.4477 9.55228 17 9 17C8.44772 17 8 17.4477 8 18V19C8 20.1046 8.89543 21 10 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H10C8.89543 3 8 3.89543 8 5Z" fill="currentColor" />
+                                        </svg>
+                                    </span>
+                                    <!--end::Svg Icon-->
+                                </a>
+                                <!--end::Action-->
+                            </div>
+                            <!--end::User-->
+                        </div>
+                        <!--end::sidebar-->
+                        <!--begin::APP-->
+                        <div class="app-main flex-column flex-row-fluid">
+                            <!--Header-->
+                            <div id="kt_header" class="header mh-100px" data-kt-sticky="true" data-kt-sticky-name="header" data-kt-sticky-offset="{default: '200px', lg: '300px'}">
+                                <div class="container-fluid d-flex align-items-stretch justify-content-between pt-4 pb-8 px-lg-10 px-sm-4 d-print-none">
+                                    <!--<div class="small">{{xi}}</div>-->
+                                    <!--begin::Logo bar-->
+                                    <div class="d-flex align-items-center flex-grow-1 justify-content-between">
+
+
+                                        <!--Mobile Menu Hamburger-->
+                                        <div class="btn btn-icon btn-circle btn-active-light-primary d-lg-none" id="app_sidebar_mobile_toggle">
+                                            <span class="svg-icon svg-icon-1">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M21 7H3C2.4 7 2 6.6 2 6V4C2 3.4 2.4 3 3 3H21C21.6 3 22 3.4 22 4V6C22 6.6 21.6 7 21 7Z" fill="currentColor" />
+                                                    <path opacity="0.3" d="M21 14H3C2.4 14 2 13.6 2 13V11C2 10.4 2.4 10 3 10H21C21.6 10 22 10.4 22 11V13C22 13.6 21.6 14 21 14ZM22 20V18C22 17.4 21.6 17 21 17H3C2.4 17 2 17.4 2 18V20C2 20.6 2.4 21 3 21H21C21.6 21 22 20.6 22 20Z" fill="currentColor" />
+                                                </svg>
+                                            </span>
+                                        </div>
+                                        <!--global search-->
+                                        <div class="btn btn-icon btn-active-danger btn-hover-scale d-lg-none" data-bs-toggle="modal" data-bs-target="#xf_search_modal" v-on:click="xqry()">
+                                            <i class="bi bi-search"></i>
+                                        </div>
+                                        <!--------------->
+                                    </div>
+                                    <!--end::Logo bar-->
+
+                                </div>
+                            </div>
+                            <!--******-->
+                            <!--******-->
+                            <!--XF Default App-->
+                            <div v-if="xz.xf_entity && !xz.xf_cx">
+                                <!--begin::Save buttons-->
+                                <div class="container-fluid d-flex justify-content-between align-items-center pb-2" v-if="xz.xf_entity">
+                                    <div class="px-2">
+                                        <span class="fs-2 text-dark fw-bold">{{xz.xf_entityhdr}}</span>
+                                    </div>
+                                    <div class="d-flex align-items-center  d-print-none">
+                                        <div v-if="xf_rdi" title="Back" class="btn btn-icon btn-sm btn-light btn-active-warning me-1" v-on:click="init(xf_rde,xf_rdi)">
+                                            <i class="bi bi-arrow-left-short"></i>
+                                        </div>
+                                        <div v-if="xz.xf_r<4" title="Menu" data-bs-toggle="dropdown" aria-expanded="false" class="btn btn-icon btn-sm btn-light btn-active-secondary me-1">
+                                            <i class="bi bi-three-dots"></i>
+                                        </div>
+                                        <ul class="dropdown-menu dropdown-menu-end p-2">
+                                            <li v-on:click="clone_inst()"><a class="dropdown-item"><i class="bi bi-recycle text-success"></i> Copy as New</a></li>
+                                            <li><a class="dropdown-item"><span class="text-muted xf-fs-em08 me-2">id:</span><span class="fw-bolder text-danger">{{xz.xf_id}}</span></a></li>
+                                            <li v-show="xz.xf_r<2"><hr class="dropdown-divider"></li>
+                                            <li v-show="xz.xf_r<2" v-on:click="delete_inst()"><a class="dropdown-item"><i class="bi bi-trash text-danger"></i> Delete</a></li>
+                                        </ul>
+                                        <div class="btn btn-icon btn-sm btn-light btn-active-secondary me-1" v-on:click="refresh()" title="Refresh"><i class="bi bi-arrow-repeat"></i></div>
+                                        <div v-if="xz.xf_id>0" class="btn btn-icon btn-primary btn-active-success me-1" v-on:click="xpost()" v-show="xz.xf_r<4" title="Save">
+                                            <span class="svg-icon"><img src="/assets/media/svg/check.svg" class="h-30px xf-filter-white"></span>
+                                        </div>
+                                        <div v-if="xz.xf_id<0" class="btn btn-icon btn-success btn-active-secondary me-1" v-on:click="xpost()" v-show="xz.xf_r<4" title="Create">
+                                            <i class="bi bi-plus fs-2x"></i>
+                                        </div>
+                                        <div class="btn btn-icon btn-sm btn-light btn-active-danger" v-on:click="close()" title="Close">
+                                            <i class="bi bi-x fs-2x"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Save buttons-->
+                                <!--xfControlTypes Loop-->
+                                <div class="d-flex flex-column flex-column-fluid py-0" :key="xz.xf_entity">
+                                    <div class="content d-flex flex-column-fluid pt-0">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div v-for="g in ui_sections()" v-bind:class="g.col" :key="g.id">
+                                                    <div v-bind:class="g.card">
+                                                        <div class="row card-body px-4 py-2">
+
+                                                            <div v-for="a in xy.xf_attr.filter(b=>g.id==xy[b].g)" :key="a" v-bind:class="xy[a].c" class="pb-4">
+                                                                <!--JSON-->
+                                                                <div v-if="xy[a].q==1" class="small p-2 text-muted bg-light">
+                                                                    {{xz}}
+                                                                </div>
+
+                                                                <!--Button-->
+                                                                <div v-if="xy[a].q==1000">
+                                                                    <div class="form-label"><span v-if="xy[a].p3">{{xy[a].h}}</span>&nbsp;</div>
+                                                                    <input type="button" v-bind:class="xy[a].p2" v-bind:id="'post_'+ a" v-on:click="xpost(a);" v-bind:value="xy[a].h" />
+                                                                </div>
+
+                                                                <!--INPUT boolean CHECKBOX-->
+                                                                <div v-if="xy[a].q==1010">
+                                                                    <label v-bind:for="'chk_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <div class="form-check form-switch pt-2">
+                                                                        <input class="form-check-input" type="checkbox" v-bind:id="'chk_'+a" v-model="xz[a]">
+                                                                        <label class="form-check-label" v-bind:for="'chk_'+a">
+                                                                            <span v-if="!xz[a]">{{ xy[a].p2 }}</span>
+                                                                            <span v-if="xz[a]">{{ xy[a].p3}}</span>
+                                                                        </label>
+                                                                        <div v-if="xy[a].p4" class="form-text">{{xy[a].p4}}</div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--INPUT textbox-->
+                                                                <div v-if="xy[a].q==0||xy[a].q==1100">
+                                                                    <label v-bind:for="'inpfl_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <input v-bind:id="'inpfl_'+a" type="text" class="form-control form-control-solid" v-model="xz[a]">
+                                                                    <div v-if="xy[a].p9" class="small text-warning">* {{xy[a].p9}}</div>
+                                                                </div>
+
+                                                                <!--INPUT Numeric textbox-->
+                                                                <div v-if="(xy[a].q==1101||xy[a].q==1105||xy[a].q==1106)">
+                                                                    <label v-bind:for="'inpfl_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <input v-bind:id="'inpfl_'+a" type="number" class="form-control form-control-solid" step=".01" v-model="xz[a]">
+                                                                </div>
+
+                                                                <!--text area 1120-->
+                                                                <div v-if="xy[a].q==1120">
+                                                                    <label v-bind:for="'txta_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <textarea v-bind:id="'txta_'+a" class="form-control fw-light small" v-model="xz[a]" v-bind:rows="xy[a].p2"></textarea>
+                                                                </div>
+
+                                                                <!--text area with Append Log 1121-->
+                                                                <div v-if="xy[a].q==1121">
+                                                                    <div class="text-hover-danger cursor-pointer" data-bs-toggle="modal" data-bs-target="#xf_1121_textarea_append">
+                                                                        <label v-bind:for="'txta_'+a" class="form-label cursor-pointer">{{xy[a].h}}<i class="bi bi-plus-circle ms-2 text-primary"></i></label>
+                                                                    </div>
+                                                                    <textarea v-bind:id="'txta_'+a" class="form-control fw-light" v-model="xz[a]" rows="4" readonly="readonly"></textarea>
+                                                                    <!--begin::Modal Container Selector-->
+                                                                    <div id="xf_1121_textarea_append" class="modal fade" aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content">
+                                                                                <div class="modal-header">
+                                                                                    <div class="h5 fw-bold me-2">{{xy[a].h}}</div>
+                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div class="row">
+                                                                                        <div class="col-12">
+                                                                                            <textarea class="form-control" v-model="xy[a].p1" rows="8"></textarea>
+                                                                                        </div>
+                                                                                        <div class="col-12 pt-6">
+                                                                                            <input type="button" class="btn btn-primary w-100 rounded-1" value="Append"
+                                                                                                   v-on:click="xz[a]=append_log(xz[a],xy[a].p1);xy[a].p1='';" data-bs-dismiss="modal">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!--Input READONLY -->
+                                                                <div v-if="xy[a].q==1125||xy[a].q==1151">
+                                                                    <label v-bind:for="'inpfl_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <input v-bind:id="'inpfl_'+a" readonly="readonly" class="form-control form-control-solid text-danger fw-bold" type="text" v-model="xz[a]">
+                                                                </div>
+                                                                <!--HTML5 Colour Picker -->
+                                                                <div v-if="xy[a].q==1130">
+                                                                    <label v-bind:for="'txta_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <input type="color" class="form-control form-control-color w-100px" v-model="xz[a]">
+                                                                </div>
+
+                                                                <!--Month CaleaNdar-->
+                                                                <div v-if="xy[a].q==1152">
+                                                                    <label v-bind:for="'inpfl_'+a" class="form-label mb-4" v-on:click="xz[a]=null">{{xy[a].h}}</label>
+                                                                    <div v-bind:id="'caleandar_'+a" @vue:mounted="caleandar($el, xy[a].p10, caleandar_settings);"></div>
+                                                                </div>
+
+                                                                <!--Date Calendar HTML5-->
+                                                                <div v-if="xy[a].q==1155">
+                                                                    <label v-bind:for="'inpfl_'+a" class="form-label" v-on:click="xz[a]=null">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <input v-if="xy[a].p5" v-bind:id="'inpfl_'+a" readonly="readonly" class="form-control form-control-solid" type="date" v-model="xz[a]">
+                                                                    <input v-else v-bind:id="'inpfl_'+a" class="form-control form-control-solid" type="date" v-model="xz[a]">
+                                                                </div>
+
+
+                                                                <!--TimePicker -->
+                                                                <div v-if="xy[a].q==1158">
+                                                                    <div @vue:mounted="xc[a]=timeToStr(xz[a])">
+                                                                        <label v-bind:for="'chk_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                        <input class="form-control form-control-solid" type="time" v-model="xc[a]" v-on:change="xz[a]=timeToMins(xc[a])">
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!--Event Calendar Auto - Kurko-->
+                                                                <div v-if="xy[a].q==1156">
+                                                                    <div id="calendar" @vue:mounted="eventCalendarInit($el, a)" @vue:unmounted="xc[a]={};"></div>
+                                                                    <span v-if="xz.xf_z>1" class="d-none" v-effect="xc[a].setOption('events', xy[a].p10)"></span>
+                                                                </div>
+
+                                                                <!--Badge List-->
+                                                                <div v-if="xy[a].q==1302">
+                                                                    <label class="form-label">{{xy[a].h}}</label>
+                                                                    <div>
+                                                                        <span v-for="B in xy[a].p10" v-bind:class="[xz[a]==B.v ?'bg-primary':'bg-secondary']"
+                                                                              class="btn badge me-1 mb-1 p-2 fw-light"
+                                                                              v-on:click="xz[a]=toggle_val(xz[a],B.v);xpost_if(!xy[a].p5);">{{B.k}}</span>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--FK DDL-->
+                                                                <div v-if="xy[a].q==1303">
+                                                                    <label class="form-label" v-on:click="redirect(xy[a].p2,xz[a])">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <select class="form-select form-select-solid" v-model="xz[a]" v-on:change="xpost_if(xy[a].p5)">
+                                                                        <option v-if="!xy[a].p4" value="-2">--</option>
+                                                                        <option v-for="x1 in xy[a].p10" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                    </select>
+                                                                </div>
+
+                                                                <!--Custom DDL-->
+                                                                <div v-if="xy[a].q==1304">
+                                                                    <div v-if="xy[a].p10">
+                                                                        <div data-bs-toggle="dropdown" aria-expanded="false" class="cursor-pointer">
+                                                                            <label class="form-label">{{xy[a].h}}</label> <i class="bi bi-caret-down"></i>
+                                                                        </div>
+
+                                                                        <div class="dropdown-menu rounded-1 p-2">
+                                                                            <div v-for="B in xy[a].p10"
+                                                                                 class="bg-active-secondary text-hover-danger cursor-pointer my-1"
+                                                                                 v-on:click="xz[a]=B.v">{{B.k}}</div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span v-for="B in xy[a].p10.filter(g=>g.v==xz[a])" class="badge bg-success p-2" v-on:click="xz[a]=-1">{{B.k}}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--FK Popup Table selector-->
+                                                                <div v-if="xy[a].q==1309 && xy[a].p10">
+
+                                                                    <div>
+                                                                        <label class="form-label me-2">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                        <span class="btn btn-light badge p-1 text-center" v-on:click="xz[a]=-1" v-show="xz[a]>0"><i class="bi bi-chevron-down p-0"></i></span>
+                                                                    </div>
+                                                                    <div v-show="xz[a]<0" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                                                                        <input type="text" class="form-control form-control-sm" placeholder="Select.." />
+                                                                    </div>
+                                                                    <div class="dropdown">
+                                                                        <div class="dropdown-menu w-100 px-1" data-bs-dismiss="dropdown" v-effect="xy[a].p10">
+                                                                            <div class="table-responsive mh-300px">
+                                                                                <table class="table table-condensed table-hover align-middle table-row-dashed no-footer mb-1">
+                                                                                    <thead class="border-bottom border-gray-200 fs-7 fw-bold">
+                                                                                        <tr>
+                                                                                            <th class="text-start text-muted text-uppercase p-1" v-for="key in objKeys(xy[a].p10[0])">{{key}}</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr v-for="A in xy[a].p10" class="cursor-pointer" v-on:click="xz[a]=A.xf_id;">
+                                                                                            <td class="p-1" v-for="key in objKeys(A)">{{A[key]}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div v-if="xz[a]>0">
+                                                                        <table class="table table-condensed align-middle table-row-dashed no-footer mb-1">
+                                                                            <thead class="border-bottom border-gray-200 fs-7 fw-bold">
+                                                                                <tr>
+                                                                                    <th class="text-start text-muted text-uppercase p-1" v-for="key in objKeys(xy[a].p10[0])">{{key}}</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr v-for="A in xy[a].p10.filter(b=>b.xf_id==xz[a])">
+                                                                                    <td class="p-1" v-for="key in objKeys(A)">{{A[key]}}</td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                                <!--DDL KV CSVList-->
+                                                                <div v-if="xy[a].q==1310">
+                                                                    <label class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <div v-if="xy[a].p10">
+                                                                        <select class="form-select form-select-solid" v-model="xz[a]">
+                                                                            <option v-for="k in xy[a].p10" v-bind:value="k">{{k}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--DDL KV-->
+                                                                <div v-if="xy[a].q==1318">
+                                                                    <label class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <div v-if="xy[a].p10">
+                                                                        <select class="form-select form-select-solid" v-model="xz[a]">
+                                                                            <option v-for="x1 in xy[a].p10" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <!-- FK popup 1320-->
+                                                                <div v-if="xy[a].q==1320">
+                                                                    <div v-if="xy[a].p1.length>0">
+                                                                        <div>
+                                                                            <label class="form-label me-2 text-hover-primary cursor-pointer">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                            <span class="cursor-pointer text-hover-danger" v-show="!xy[a].p8" v-on:click="xz[a]=-1;xy[a].p1=[];q_loc=[];"><i class="bi bi-chevron-down"></i></span>
+                                                                        </div>
+                                                                        <div class="table-responsive mh-100px">
+                                                                            <table class="table table-condensed align-middle table-row-dashed no-footer mb-1">
+                                                                                <thead class="bg-gray-200 fw-bold fs-8" v-show="!xy[a].p9">
+                                                                                    <tr>
+                                                                                        <th class="text-start text-gray-600 text-uppercase p-1" v-for="key in objKeys(xy[a].p1[0])">{{key}}</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="A in xy[a].p1" class="text-hover-primary cursor-pointer" v-on:click="redirect(xy[a].p2,xz[a])">
+                                                                                        <td class="p-1" v-for="key in objKeys(A)">{{A[key]}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div v-if="xy[a].p1.length==0" class="dropdown">
+                                                                        <div data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                                                                            <label class="form-label me-2">{{xy[a].h}}</label>
+                                                                            <i class="bi bi-search text-primary" v-if="!xy[a].p4" v-on:click="xqry('?',xy[a].p2,'local',xy[a].p3);xy[a].p4='?';"></i>
+                                                                            <i class="bi bi-x-circle text-danger" v-if="xy[a].p4" v-on:click="xy[a].p4='';q_loc=[];xz[a]=-1;"></i>
+                                                                            <input type="text" class="form-control form-control-sm" placeholder="Search.." v-model="xy[a].p4" v-on:keyup="xqry(xy[a].p4,xy[a].p2,'local',xy[a].p3,50)" />
+                                                                        </div>
+
+                                                                        <div class="dropdown-menu w-100 px-1" data-bs-dismiss="dropdown">
+                                                                            <div class="table-responsive mh-300px">
+                                                                                <table class="table table-condensed table-hover align-middle table-row-dashed no-footer mb-1">
+                                                                                    <thead class="border-bottom border-gray-200 fs-7 fw-bold">
+                                                                                        <tr>
+                                                                                            <th class="text-start text-muted text-uppercase p-1" v-for="key in objKeys(q_loc[0])">{{key}}</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr v-for="A in q_loc" class="cursor-pointer" v-on:click="q_loc=[];xz[a]=A.xf_id;xy[a].p1.push(A);xy[a].p4=''; xpost_if(xy[a].p5);">
+                                                                                            <td class="p-1" v-for="key in objKeys(A)">{{A[key]}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <!--Symbol List-->
+                                                                <div v-if="xy[a].q==1323">
+                                                                    <label class="form-label">{{xy[a].h}}</label>
+                                                                    <div class="symbol-group symbol-hover mb-1">
+                                                                        <div v-for="B in xy[a].p10" v-bind:class="[xz[a]==B.v ?'border border-success border-3 '+xy[a].p4 :xy[a].p4]"
+                                                                             v-on:click="xz[a]=toggle_val(xz[a],B.v);xpost_if(xy[a].p5);">
+                                                                            <img v-if="B.i" :src="B.i" :alt="B.k" :title="B.k">
+                                                                            <div v-if="!B.i" class="symbol-label bg-gray-200i">
+                                                                                <span class="text-primary">{{B.k}}</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <!--Files List-->
+                                                                <div v-if="xy[a].q==1401">
+                                                                    <label :for="a" class="form-label cursor-pointer">{{xy[a].h}}<i class="bi bi-paperclip text-primary mx-2"></i> </label>
+                                                                    <div class="p-2">
+                                                                        <input :id="a" type="file" class="d-none" accept="" v-on:change="file_up" multiple>
+                                                                        <div class="d-flex gap-2">
+                                                                            <div v-for="F in xz[a]" class="bg-light rounded-1 px-2 py-1 min-w-100px mh-350px">
+                                                                                <div class="fw-light text-primary small">{{F.name}}</div>
+                                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                                    <span class="cursor-pointer small text-hover-primary" v-on:click="file_down(F.dataurl,F.name)">
+                                                                                        <span class="text-gray-400 me-2">{{F.size}}</span><i class="bi bi-download"></i>
+                                                                                    </span>
+                                                                                    <span class="cursor-pointer text-hover-info" v-on:click="file_remove(F,a)"><i class="bi bi-x text-danger p-0"></i></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--images-->
+                                                                <div v-if="xy[a].q==1402">
+                                                                    <label :for="a" class="form-label cursor-pointer">{{xy[a].h}}<i class="bi bi-paperclip text-primary mx-2"></i> </label>
+                                                                    <div class="p-2">
+                                                                        <input :id="a" type="file" class="d-none" accept="" v-on:change="file_up" multiple>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div v-for="F in xz[a]" class="col-lg-3 col-md-4 mb-2" :key="F.name">
+                                                                            <div>
+                                                                                <img v-bind:src="F.dataurl||''" :title="F.name" class="img-fluid img-thumbnail" />
+                                                                            </div>
+                                                                            <div class="bg-light rounded-1 px-2 py-1 min-w-200px mt-1">
+                                                                                <div class="fw-light text-primary small">{{F.name}}</div>
+                                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                                    <span class="cursor-pointer small text-hover-primary" v-on:click="file_down(F.dataurl,F.name)">
+                                                                                        <span class="text-gray-400 me-2">{{F.size}}</span><i class="bi bi-download"></i>
+                                                                                    </span>
+                                                                                    <span class="cursor-pointer text-hover-info" v-on:click="file_remove(F,a)"><i class="bi bi-x text-danger p-0"></i></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!--image compressed-->
+                                                                <div v-if="xy[a].q==1403">
+                                                                    <label :for="a" class="form-label cursor-pointer">{{xy[a].h}}<i class="bi bi-paperclip text-primary mx-2"></i></label>
+                                                                    <div class="p-2">
+                                                                        <input :id="a" type="file" class="d-none" accept="" v-on:change="img_oncanvas">
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div v-for="F in xz[a]" class="col-lg-3 col-md-4 mb-2" :key="F.name">
+                                                                            <div>
+                                                                                <img v-bind:src="F.dataurl" :title="F.name" class="img-fluid img-thumbnail" />
+                                                                            </div>
+                                                                            <div class="bg-light rounded-1 px-2 py-1 min-w-200px mt-1">
+                                                                                <div class="fw-light text-primary small">{{F.name}}</div>
+                                                                                <div class="d-flex justify-content-between align-items-center">
+                                                                                    <span class="cursor-pointer small text-hover-primary" v-on:click="file_down(F.dataurl,F.name)">
+                                                                                        <span class="text-gray-400 me-2">{{F.size}}</span><i class="bi bi-download"></i>
+                                                                                    </span>
+                                                                                    <span class="cursor-pointer text-hover-info" v-on:click="file_remove(F,a)"><i class="bi bi-x text-danger p-0"></i></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!--image single-->
+                                                                <div v-if="xy[a].q==1404">
+                                                                    <label :for="a" class="form-label cursor-pointer">{{xy[a].h}}<i class="bi bi-paperclip text-primary mx-2"></i></label>
+                                                                    <div class="p-2">
+                                                                        <input :id="a" type="file" class="d-none" accept="" v-on:change="file_up_single">
+                                                                    </div>
+                                                                    <div><img v-bind:src="xz[a]||''" class="img-fluid img-thumbnail" /></div>
+                                                                </div>
+
+                                                                <!--Signature Component-->
+                                                                <div v-if="xy[a].q==1450" class="my-4 p-1">
+                                                                    <label class="form-label">{{xy[a].h}}</label>
+                                                                    <div class="overflow-hidden">
+                                                                        <div v-if="xz[a]">
+                                                                            <img v-bind:src="xz[a]" alt="Signature" width="480" />
+                                                                        </div>
+                                                                        <div v-else class="text-center" disabled>
+                                                                            <div class="bg-light p-2">
+                                                                                <canvas height="300" width="480" @vue:mounted="SignaturePad_init($el,a)"></canvas>
+                                                                            </div>
+                                                                            <div class="d-flex justify-content-between p-2 align-items-center">
+                                                                                <span class="badge btn btn-active-danger p-2" v-on:click="SignaturePad_clear(a)"><i class="bi bi-caret-left p-0"></i></span>
+                                                                                <span class="badge btn btn-active-success p-2" v-on:click="SignaturePad_save(a)"><i class="bi bi-check-circle p-0"></i></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div style="border-top:dashed 1px #0A3242"><span class="form-label"></span>{{xy[a].h}}</div>
+                                                                    </div>
+                                                                </div>
+                                                                <!--Signature ends-->
+                                                                <!--DATAGRID component-->
+
+                                                                <div v-if="xy[a].q==1550||xy[a].q==1504">
+                                                                    <div class="d-flex justify-content-between align-items-center mt-2" v-if="!xy[a].p7">
+                                                                        <div class="form-label"><span v-if="!xy[a].x.hideHeader">{{xy[a].h}}</span></div>
+                                                                        <div v-if="xy[a].p10">
+                                                                            <span v-if="xy[a].p10.length>1" v-on:click="saveToExcel(xy[a].p10)" class="btn badge p-1 text-center me-2" title="Download as XLS">
+                                                                                <i class="bi bi-cloud-arrow-down p-0"></i>
+                                                                            </span>
+                                                                            <span v-if="xz.xf_id>0" v-on:click="redirect(xy[a].p2,-1,xy[a].p3)" class="btn btn-success rounded badge p-1 text-center" title="Create New">
+                                                                                <i class="bi bi-plus p-0"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="table-responsive mb-2" v-bind:class="xy[a].p6" v-if="xy[a].p10">
+                                                                        <table class="table  table-sm text-nowrap table-condensed align-middle table-row-dashed table-hover no-footer my-1">
+                                                                            <thead class="border-bottom border-gray-200 fs-7 bg-light fw-bold">
+                                                                                <tr>
+                                                                                    <th class="text-start text-muted text-uppercase cursor-pointer p-2"
+                                                                                        v-on:click="sortTable(xy[a].p10,key,1)" v-for="key in objKeys(xy[a].p10[0])">{{key}}</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody class="small">
+                                                                                <tr v-for="A in xy[a].p10" v-on:click="redirect(xy[a].p2,A.xf_id)">
+                                                                                    <td class="p-2 cursor-pointer" v-for="key in objKeys(A)">
+                                                                                        {{A[key]}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--DATA Selector-->
+                                                                <div v-if="xy[a].q==1553">
+                                                                    <div class="d-flex justify-content-between align-items-center mt-2" v-if="!xy[a].p7">
+                                                                        <div class="form-label">{{xy[a].h}}</div>
+                                                                        <div v-if="xy[a].p10">
+                                                                            <span v-if="xy[a].p10.length>1" v-on:click="saveToExcel(xy[a].p10)" class="btn badge p-1 text-center me-2" title="Download as XLS">
+                                                                                <i class="bi bi-cloud-arrow-down p-0"></i>
+                                                                            </span>
+                                                                            <div class="btn btn-success badge p-1 text-center" title="Menu" data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                <i class="bi bi-three-dots p-0"></i>
+                                                                            </div>
+                                                                            <ul class="dropdown-menu dropdown-menu-end p-2">
+                                                                                <li v-for="B in xy[a].p1" v-on:click="xpost(B.v)">
+                                                                                    <a class="dropdown-item text-hover-primary px-2 cursor-pointer"><i class="bi bi-arrow-right-square me-2"></i>{{B.k}}</a>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="mb-2 table-responsive mh-600px" v-if="xz[a]" v-bind:class="xy[a].p6">
+                                                                        <table class="table table-sm text-nowrap table-condensed align-middle table-row-dashed table-hover no-footer my-1">
+                                                                            <thead class="border-bottom border-gray-200 fs-7 bg-light fw-bold">
+                                                                                <tr>
+                                                                                    <th class="cursor-pointer p-2">&nbsp;</th>
+                                                                                    <th class="text-start text-muted text-uppercase cursor-pointer p-2"
+                                                                                        v-on:click="sortTable(xy[a].p10,key,1)" v-for="key in objKeys(xy[a].p10[0])">{{key}}</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody class="small">
+                                                                                <tr v-for="A in xy[a].p10" v-on:click="arr_toggle(xz[a],A.xf_id)">
+                                                                                    <td>
+                                                                                        <i v-if="arr_exists(xz[a],A.xf_id)" class="bi bi-check-square text-danger"></i>
+                                                                                        <i v-else class="bi bi-square"></i>
+                                                                                    </td>
+                                                                                    <td class="p-2 cursor-pointer" v-for="key in objKeys(A)">
+                                                                                        {{A[key]}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!--//custom controls-->
+
+
+                                                                <div v-if="xy[a].q==100">
+
+                                                                    <!--trip Allocation-->
+                                                                    <div v-if="xz.xf_entity=='ot_tripallocation'">
+                                                                        <div v-if="a=='trip_'">
+                                                                            <div class="table-responsive mb-2 overflow-y-auto" v-if="xy[a].p10[0]" style="max-height:220px;">
+                                                                                <table class="table table-hover table-condensed align-middle my-1">
+                                                                                    <thead class="border-bottom border-gray-200 fw-bold">
+                                                                                        <tr>
+                                                                                            <th class="p-1 w-50px">
+                                                                                                <i v-show="xz.trip_!=-1" class="bi bi-plus-circle-dotted text-primary cursor-pointer" v-on:click="xz.trip_=-1"></i>
+                                                                                            </th>
+                                                                                            <th class="p-1 w-75px">Trip#</th>
+                                                                                            <th class="p-1">Tour</th>
+                                                                                            <th class="p-1">Driver</th>
+                                                                                            <th class="p-1">Vehicle</th>
+                                                                                            <th class="p-1"></th>
+                                                                                            <th class="p-1 w-30px"></th>
+                                                                                            <th class="p-1 w-30px"></th>
+                                                                                            <th class="p-1">Allocated</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody class="small">
+                                                                                        <tr v-for="A in xy[a].p10[0]" v-on:click="xz.tour_=A.tour_;xz.trip_=A.xf_id;xz.btn_view=A.tourcc;xz.hexcode=A.hexcode;" class="cursor-pointer">
+                                                                                            <td class="p-1">
+                                                                                                <span v-if="A.tourcc">
+                                                                                                    <i v-if="xz.trip_==A.xf_id" class="bi bi-arrow-right-circle text-danger" style="font-size:1.6em;"></i>
+                                                                                                    <i v-else class="bi bi-circle"></i>
+                                                                                                </span>
+                                                                                                <span v-else>
+                                                                                                    <i v-if="xz.driver_>0 && xz.vehicle_>0" class="bi bi-check-circle-fill text-danger text-hover-success cursor-pointer"
+                                                                                                       v-on:click="xz.trip_=A.xf_id;xpost('save_trip')"></i>
+                                                                                                    <i v-else class="bi bi-circle text-secondary"></i>
+                                                                                                </span>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <div class="form-control form-control-sm text-center text-white" :style="{'backgroundColor':A.hexcode}">
+                                                                                                    {{A.tripno}}
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <div v-if="A.tour_>0">
+                                                                                                    <div class="fw-bold">{{A.Tour}}</div>
+                                                                                                </div>
+                                                                                                <div v-else>
+                                                                                                    <select class="form-select form-select-sm" v-model="xz.tour_">
+                                                                                                        <option value="-1">Select Tour</option>
+                                                                                                        <option v-for="x1 in xy[a].p10[1]" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <div v-if="A.driver_>0">
+                                                                                                    <div class="form-control form-control-sm rounded-1">
+                                                                                                        {{A.Driver}}
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div v-else>
+                                                                                                    <select class="form-select form-select-sm" v-model="xz.driver_">
+                                                                                                        <option value="-1">Select Driver</option>
+                                                                                                        <option v-for="x1 in xy.driver_.p10" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </td>
+
+                                                                                            <td class="p-1">
+                                                                                                <div v-if="A.vehicle_>0">
+                                                                                                    <div class="form-control form-control-sm rounded-1">
+                                                                                                        {{A.Vehicle}}
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div v-else>
+                                                                                                    <select class="form-select form-select-sm" v-model="xz.vehicle_">
+                                                                                                        <option value="-1">Select Vehicle</option>
+                                                                                                        <option v-for="x1 in xy.vehicle_.p10" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                                                    </select>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <input type="color" class="form-control form-control-color form-control-sm rounded-1 w-100" v-model="A.hexcode">
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <span role="button" title="Save Trip Colour" class="text-warning px-1 text-hover-danger"
+                                                                                                      v-on:click="xz.trip_=A.xf_id;xz.hexcode=A.hexcode;xpost('save_triphex');">
+                                                                                                    <i class="bi bi-palette-fill me-1 text-primary"></i>
+                                                                                                </span>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <span v-if="A.allocated<=0" role="button" title="Delete Trip" class="text-warning px-1 text-hover-danger" v-on:click="xz.trip_=A.xf_id;xpost('del_trip');">
+                                                                                                    <i class="bi bi-trash me-1 text-warning"></i>
+                                                                                                </span>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <div v-if="A.driver_>0 && A.vehicle_>0">
+                                                                                                    <div class="form-control form-control-sm rounded-1">
+                                                                                                        <span>{{A.allocated}}</span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div v-else>
+                                                                                                    <button class="btn btn-danger rounded-1 p-2 w-100" v-on:click="xz.trip_=A.xf_id;xpost('save_trip');">
+                                                                                                        Save
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </td>
+
+                                                                                        </tr>
+                                                                                        <tr v-if="xz.trip_==-1">
+                                                                                            <td class="p-1">
+                                                                                                <i class="bi bi-x-circle-fill cursor-pointer text-hover-secondary" @click="xz.trip_=0"></i>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <div class="form-control form-control-sm rounded-1 text-info fw-bold text-center">NEW</div>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <select class="form-select form-select-sm rounded-1" v-model="xz.tour_">
+                                                                                                    <option value="-1">Select Tour</option>
+                                                                                                    <option v-for="x1 in xy.tour_.p10" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                                                </select>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <select class="form-select form-select-sm rounded-1" v-model="xz.driver_">
+                                                                                                    <option value="-1">Select Driver</option>
+                                                                                                    <option v-for="x1 in xy.driver_.p10" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                                                </select>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <select class="form-select form-select-sm rounded-1" v-model="xz.vehicle_">
+                                                                                                    <option value="-1">Select Vehicle</option>
+                                                                                                    <option v-for="x1 in xy.vehicle_.p10" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                                                </select>
+                                                                                            </td>
+                                                                                            <td class="p-1">
+                                                                                                <input type="color" class="form-control form-control-color form-control-sm rounded-1 w-100" v-model="xz.hexcode">
+                                                                                            </td>
+                                                                                            <td class="p-1" colspan="3">
+                                                                                                <button v-if="xz.driver_>0 && xz.vehicle_>0" class="btn btn-danger rounded-1 p-2 w-100"
+                                                                                                        v-on:click="xpost('save_trip');">
+                                                                                                    Save
+                                                                                                </button>
+                                                                                                <button v-else class="btn btn-secondary rounded-1 p-2 w-100" disabled>Save</button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                        <div v-if="a=='booking_'">
+                                                                            <div class="table-responsive mb-2" v-if="xy[a].p10[0]">
+                                                                                <table class="table table-condensed table-sm text-nowrap align-middle table-row-dashed no-footer my-1">
+                                                                                    <thead class="border-bottom border-gray-200 fw-bold">
+                                                                                        <tr>
+                                                                                            <th class="w-10px"></th>
+                                                                                            <th class="w-30px"></th>
+                                                                                            <th class="text-start text-uppercase cursor-pointer p-1"
+                                                                                                v-on:click="sortTable(xy[a].p10[0],key,1)"
+                                                                                                v-for="key in objKeys(xy[a].p10[0][0]).filter(e=>!(e=='tripcc'||e=='tourcc'||e=='hexcode'||e=='tour_'||e=='trip_'))">{{key}}</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody class="small">
+                                                                                        <tr v-for="A in xy[a].p10[0]" :style="{'backgroundColor':A.hexcode}">
+                                                                                            <td :style="{'backgroundColor':A.tourcc}"></td>
+                                                                                            <td class="p-1">
+                                                                                                <span v-if="xz.trip_>0">
+                                                                                                    <span v-if="A.trip_<=0">
+                                                                                                        <i v-on:click="xz.booking_=A.xf_id;xpost('add_booking')"
+                                                                                                           class="bi bi-plus-circle-fill text-success text-hover-danger cursor-pointer"></i>
+                                                                                                    </span>
+                                                                                                    <span v-if="A.trip_==xz.trip_">
+                                                                                                        <i class="bi bi-dash-circle text-white text-hover-danger cursor-pointer" v-on:click="xz.booking_=A.xf_id;xpost('del_booking')"></i>
+                                                                                                    </span>
+                                                                                                </span>
+                                                                                            </td>
+                                                                                            <td class="p-2"
+                                                                                                v-for="key in objKeys(A).filter(e=>!(e=='tripcc'||e=='tourcc'||e=='hexcode'||e=='tour_'||e=='trip_'))">
+                                                                                                <span>{{A[key]}}</span>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!--End-- Trip Allocation-->
+                                                                    <!------------------------------------------------->
+                                                                    <!--TOUR-->
+                                                                    <!--start booking-->
+                                                                    <div v-if="xz.xf_vx=='ot_booking_v1'&& a=='tour_' && xz.xf_id<0">
+                                                                        <!--select tour-->
+                                                                        <div class="row pt-2" v-if="xz.tour_<0">
+                                                                            <div class="col-sm-6 col-md-3 pb-3" v-for="D in xy[a].p10[0]">
+                                                                                <div class="card shadow p-2 cursor-pointer">
+                                                                                    <!-- Offer badge -->
+                                                                                    <div class="position-absolute top-0 start-0 mt-n3 ms-n3 z-index-1" v-if="D.plan_rate">
+                                                                                        <img src="/assets/media/element/offer.svg" class="position-relative h-70px">
+                                                                                        <span class="h5 text-white position-absolute top-50 start-50 translate-middle">{{D.disc}}%</span>
+                                                                                    </div>
+
+                                                                                    <div class="rounded-3 overflow-hidden position-relative">
+                                                                                        <div v-if="D.tour_image" class="min-h-200px">
+                                                                                            <img v-bind:src="D.tour_image" class="card-img">
+                                                                                        </div>
+                                                                                        <div v-else>
+                                                                                            <img src="/assets/media/images/02.jpg" class="card-img">
+                                                                                        </div>
+                                                                                        <div class="bg-overlay bg-dark opacity-0"></div>
+
+                                                                                        <div class="card-img-overlay d-flex p-2"
+                                                                                             v-on:click="xz.tour_=D.xf_id;xz.is_adhoc=D.is_adhoc;xz.rate_adult=D.stdrate;xz.rate_child=D.stdrate_child;">
+                                                                                            <div class="link link-light mt-auto mb-0 cursor-pointer">Book Now</div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <!-- Card body -->
+                                                                                    <div class="card-body p-2">
+
+                                                                                        <div class="h-50px"><h6 class="card-title">{{D.name}}</h6></div>
+                                                                                        <div v-if="D.plan_rate" class="d-flex justify-content-between align-items-center mb-0">
+                                                                                            <h6 class="text-success mb-0">€ {{D.plan_rate}} <span class="fw-light">/person</span></h6>
+                                                                                            <span class="text-decoration-line-through mb-0 text-reset">€ {{D.stdrate}} </span>
+                                                                                        </div>
+                                                                                        <div v-else class="mb-0">
+                                                                                            <h6 class="text-success mb-0">€ {{D.stdrate}} <span class="fw-light">/adult</span></h6>
+                                                                                        </div>
+                                                                                        <div class="text-secondary smaller h-40px">
+                                                                                            {{D.details}}
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div v-else>
+                                                                            <div v-for="D in xy[a].p10[0].filter(b=>b.xf_id==xz.tour_)" class="col-12">
+
+                                                                                <div class="card shadow">
+                                                                                    <div class="card-body">
+
+                                                                                        <div class="d-flex justify-content-between align-items-center">
+                                                                                            <div class="h4">{{D.name}}</div>
+                                                                                            <div class="btn btn-sm btn-primary-soft-check" v-on:click="xz.tour_=-1"><i class="bi bi-arrow-left"></i></div>
+                                                                                        </div>
+                                                                                        <div class="mb-2 p-1">
+                                                                                            <div>
+                                                                                                <span class="text-success fw-bold me-2">€ {{D.stdrate}} <span class="fw-light">/adult</span></span>
+                                                                                                <span class="text-secondary">€ {{D.stdrate_child}} <span class="fw-light">/child</span></span>
+                                                                                            </div>
+                                                                                            <div class="text-secondary small">Capacity: {{D.seatingcap}} <span class="fw-light">persons</span></div>
+                                                                                        </div>
+
+                                                                                        <div class="row mt-4">
+
+                                                                                            <div class="col-sm-6 col-xs-12">
+
+                                                                                                <div class="mb-4">
+                                                                                                    <div class="d-flex justify-content-between align-items-center border-bottom border-secondary-subtle cursor-pointer bg-danger-soft-hover p-2"
+                                                                                                         data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                                        <div class="h6 mb-0">Select Date</div>
+                                                                                                        <i class="bi bi-caret-down"></i>
+                                                                                                    </div>
+
+                                                                                                    <div class="dropdown-menu dropdown-menu-end menu-rounded overflow-y-auto p-2 mh40vh">
+                                                                                                        <div v-for="L in xy[a].p10[1].filter(f=>f.tour_==xz.tour_)" v-on:click="xz.reqdate=L.tourdate"
+                                                                                                             class="p-2 shadow-sm mb-1 bg-hover-primary">
+                                                                                                            <div class="fw-bold" role="button">{{L.tourdate_str}}</div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div v-if="xz.reqdate">
+                                                                                                        <div v-for="L in xy[a].p10[1].filter(f=>f.tourdate==xz.reqdate&&f.tour_==xz.tour_)" class="p-2 shadow-sm">
+                                                                                                            <div class="badge bg-primary">{{L.tourdate_str}}</div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+                                                                                                <div class="mb-4">
+                                                                                                    <div class="d-flex justify-content-between align-items-center border-bottom border-secondary-subtle cursor-pointer bg-danger-soft-hover p-2"
+                                                                                                         data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                                        <div class="h6 mb-0">Pickup Location</div>
+                                                                                                        <i class="bi bi-caret-down"></i>
+                                                                                                    </div>
+                                                                                                    <div class="dropdown-menu dropdown-menu-end menu-rounded overflow-y-auto p-2 col-5 mh40vh">
+                                                                                                        <div v-for="L in xy[a].p10[2].filter(f=>f.tour_==xz.tour_)" v-on:click="xz.pickuploc_=L.xf_id;xz.reqtime=L.pickuptime;"
+                                                                                                             class="p-2 shadow-sm rounded-1 mb-2 cursor-pointer bg-danger-soft-hover">
+                                                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                                                <div class="badge bg-primary smaller p-1">{{L.zone}}</div>
+                                                                                                                <div class="form-label">{{L.location}}</div>
+                                                                                                            </div>
+                                                                                                            <div v-show="!xz.is_adhoc" class="fw-bold text-danger small">{{timeToStr(L.pickuptime)}} hrs</div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div v-if="xz.pickuploc_>0">
+                                                                                                        <div v-for="L in xy[a].p10[2].filter(f=>f.xf_id==xz.pickuploc_&&f.tour_==xz.tour_)" class="p-2 shadow-sm">
+                                                                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                                                                <div class="badge bg-primary smaller p-1">{{L.zone}}</div>
+                                                                                                                <div class="form-label">{{L.location}}</div>
+                                                                                                            </div>
+                                                                                                            <div v-show="!xz.is_adhoc" class="fw-bold text-danger small">{{timeToStr(L.pickuptime)}} hrs</div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="mt-4" v-if="xz.is_adhoc">
+                                                                                                        <div class="border-bottom border-secondary-subtle p-2">
+                                                                                                            <div class="h6 mb-0">Pickup Time</div>
+                                                                                                        </div>
+                                                                                                        <div @vue:mounted="xc['ot_booking_reqtime']=timeToStr(xz.reqtime)" v-if="xz.is_adhoc">
+                                                                                                            <input class="form-control mt-1 rounded-0" type="time" v-model="xc['ot_booking_reqtime']"
+                                                                                                                   v-on:change="xz.reqtime=timeToMins(xc['ot_booking_reqtime'])">
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+
+
+                                                                                                <div class="mb-4">
+                                                                                                    <div class="d-flex justify-content-between align-items-center border-bottom border-secondary-subtle cursor-pointer bg-danger-soft-hover p-2"
+                                                                                                         data-bs-toggle="dropdown" aria-expanded="false">
+                                                                                                        <div class="h6 mb-0">Salesperson</div>
+                                                                                                        <i class="bi bi-caret-down"></i>
+                                                                                                    </div>
+
+                                                                                                    <div class="dropdown-menu dropdown-menu-end menu-rounded overflow-y-auto p-2 col-5 mh40vh">
+                                                                                                        <div v-for="L in xy[a].p10[3]" v-on:click="xz.salesrep_=L.xf_id"
+                                                                                                             class="p-2 shadow-sm mb-1  cursor-pointer bg-danger-soft-hover">
+                                                                                                            <div class="badge bg-success">{{L.name}}</div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div v-if="xz.salesrep_>0">
+                                                                                                        <div v-for="L in xy[a].p10[3].filter(f=>f.xf_id==xz.salesrep_)" class="p-2 shadow-sm">
+                                                                                                            <div class="badge bg-primary">{{L.name}}</div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+
+                                                                                            <div class="col-sm-6 col-xs-12">
+                                                                                                <div v-if="xz.tour_>0 && xz.pickuploc_>0 &&xz.reqdate">
+                                                                                                    <div class="row">
+                                                                                                        <!--INPUT textbox-->
+                                                                                                        <div class="col-12">
+                                                                                                            <label class="form-label">Client Name<i class="bi bi-record-fill ms-2 text-danger"></i></label>
+                                                                                                            <input type="text" class="form-control form-control-sm" v-model="xz.clientname">
+                                                                                                        </div>
+                                                                                                        <div class="col-6">
+                                                                                                            <label class="form-label">Adults<i class="bi bi-record-fill ms-2 text-danger"></i></label>
+                                                                                                            <input type="number" step="1" min="0" class="form-control form-control-sm" v-model="xz.qty_adults">
+                                                                                                        </div>
+                                                                                                        <div class="col-6">
+                                                                                                            <label class="form-label">Children</label>
+                                                                                                            <input type="number" step="1" min="0" class="form-control form-control-sm" v-model="xz.qty_child">
+                                                                                                        </div>
+                                                                                                        <div class="col-6">
+                                                                                                            <label class="form-label">Mobile/Tel<i class="bi bi-record-fill ms-2 text-danger"></i></label>
+                                                                                                            <input type="text" class="form-control form-control-sm" v-model="xz.contactno">
+                                                                                                        </div>
+                                                                                                        <div class="col-6">
+                                                                                                            <label class="form-label">Hotel/Room Number</label>
+                                                                                                            <input type="text" class="form-control form-control-sm" v-model="xz.room">
+                                                                                                        </div>
+                                                                                                        <div class="col-12">
+                                                                                                            <label class="form-label">Contact Email<i class="bi bi-record-fill ms-2 text-danger"></i></label>
+                                                                                                            <input type="text" class="form-control form-control-sm" v-model="xz.email">
+                                                                                                        </div>
+                                                                                                        <div class="col-12">
+                                                                                                            <label class="form-label">Remarks</label>
+                                                                                                            <textarea class="form-control fw-light" v-model="xz.remarks" rows="2"></textarea>
+                                                                                                        </div>
+                                                                                                        <!--confirm-->
+                                                                                                        <div class="col-12 py-4">
+                                                                                                            <button v-bind:disabled="!(xz.clientname&&xz.qty_adults>0)" class="btn btn-success w-100" v-on:click="xpost()">Confirm</button>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div v-else>
+                                                                                                    <div v-if="D.tour_image" class="mh40vh">
+                                                                                                        <img v-bind:src="D.tour_image" class="img-fluid rounded">
+                                                                                                    </div>
+                                                                                                    <div v-else class="mh40vh">
+                                                                                                        <img src="/assets/media/images/02.jpg" class="card-img">
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                    </div>
+
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <!--Booking complete-->
+                                                                    <div v-if="xz.xf_vx=='ot_booking_v1'&& a=='bookingno' && xz.xf_id>0">
+
+                                                                        <div>
+                                                                            <div class="d-flex justify-content-between mb-4">
+                                                                                <div>
+                                                                                    <img src="/assets/media/logos/oasis_logo.png" style="height:120px;" alt="logo">
+                                                                                </div>
+                                                                                <div id="company-details-container">
+                                                                                    <p id="company-details">
+                                                                                        Company VAT number: MT28900730<br />
+                                                                                        Adress: 164/165 Industrial Estate Luqa<br />
+                                                                                        Email: office@oasistoursmalta.com<br />
+                                                                                        Number: 21580688 / +356 99555152.
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="text-center mb-4">
+                                                                                <h4>Booking Confirmation</h4>
+                                                                            </div>
+
+
+                                                                            <table id="tbx1" class="w-100">
+                                                                                <tr class="fw-bold">
+                                                                                    <td>Booking Number</td>
+                                                                                    <td>Tour</td>
+                                                                                    <td>Tour Date</td>
+                                                                                    <td>Booking Date</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>{{xy[a].p10[0][0].bookingno}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].tour}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].tourdate}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].bookingdate}}</td>
+                                                                                </tr>
+                                                                                <tr class="fw-bold">
+                                                                                    <td>Pickup Location</td>
+                                                                                    <td>Pickup Time</td>
+                                                                                    <td>Adults</td>
+                                                                                    <td>Children</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>{{xy[a].p10[0][0].pickuplocation}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].pickuptime}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].qty_adults}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].qty_child}}</td>
+                                                                                </tr>
+                                                                                <tr class="fw-bold">
+                                                                                    <td>Client Name</td>
+                                                                                    <td>Contact Number</td>
+                                                                                    <td>Email</td>
+                                                                                    <td>Hotel/Room</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>{{xy[a].p10[0][0].clientname}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].contactno}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].email}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].room}}</td>
+                                                                                </tr>
+
+                                                                                <tr class="fw-bold">
+                                                                                    <th colspan="2">Price</th>
+                                                                                    <th>VAT</th>
+                                                                                    <th>Total</th>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td>{{xy[a].p10[0][0].qty_adults}}<i class="bi bi-x"></i>adult + {{xy[a].p10[0][0].qty_child}}<i class="bi bi-x"></i>child</td>
+                                                                                    <td>€ {{xy[a].p10[0][0].price}}</td>
+                                                                                    <td>{{xy[a].p10[0][0].vat}} %</td>
+                                                                                    <td>€ {{xy[a].p10[0][0].total}}</td>
+                                                                                </tr>
+                                                                                <tr class="fw-bold">
+                                                                                    <td colspan="4">Remarks</td>
+                                                                                </tr>
+                                                                                <tr style="min-height:32px;">
+                                                                                    <td colspan="4">{{xy[a].p10[0][0].remarks}}</td>
+                                                                                </tr>
+                                                                            </table>
+
+                                                                        </div>
+
+                                                                    </div>
+
+
+                                                                    <div v-if="xz.xf_vx=='ot_booking_v2'&& a=='tour_' && xz.xf_id<0">
+                                                                        <div class="table-responsive mb-2" v-if="xy[a].p10[0]">
+                                                                            <table class="table  table-sm text-nowrap table-condensed align-middle table-row-dashed table-hover no-footer my-1">
+                                                                                <thead class="border-bottom bg-light">
+                                                                                    <tr>
+                                                                                        <th class="text-start text-uppercase cursor-pointer p-1 fw-bold smaller"
+                                                                                            v-on:click="sortTable(xy[a].p10[0],key,1)" v-for="key in objKeys(xy[a].p10[0][0])">{{key}}</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="A in xy[a].p10[0]" v-on:click="init('ot_booking',A.xf_id,'ot_booking_v1')">
+                                                                                        <td class="p-1 cursor-pointer smaller" v-for="key in objKeys(A)">
+                                                                                            {{A[key]}}
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+
+
+
+
+
+
+                                <!--<div>{{xy}}</div>-->
+
+
+
+                            </div>
+
+
+
+                            <!--******-->
+                            <!--******-->
+                            <!--Blank-->
+                            <div v-if="!xz.xf_entity" class="h-100 d-flex align-items-center justify-content-between pb-10">
+
+                                <div class="col d-flex justify-content-center">
+                                    <div>
+                                        <h3 class="text-warning mb-3">Welcome</h3>
+                                        <div class="p-1" v-on:click="init('ot_tripallocation')">
+                                            <span class="btn btn-warning rounded-1 fs-3">Allocate Trips</span>
+                                        </div>
+                                    </div>                                  
+                                </div>
+                                <div class="col d-flex justify-content-center">
+                                    <img src="/assets/media/illustrations/selfie.svg" class="img-responsive mh-300px">
+                                </div>
+
+                            </div>
+                            <!--******-->
+                        </div>
+                        <!--end::APP-->
+                    </div>
+
+
+                </div>
+
+                <!------------------------------------------------------------->
+                <!--begin::Modal Search-->
+                <div class="modal fade" id="xf_search_modal" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-dashed">
+                                <div class="d-flex align-items-center">
+                                    <div class="btn btn-sm btn-icon btn-light btn-active-success me-2" v-if="q_mode=='entity'&&q_gl_ent" v-on:click="xqry_nav(0)">
+                                        <span class="svg-icon">
+                                            <img src="/assets/media/svg/arrow-left.svg" class="h-20px" />
+                                        </span>
+                                    </div>
+                                    <span class="h2 fw-bolder">{{q_gl_hdr}}</span>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body pb-2 pt-6">
+
+                                <div v-if="q_mode=='entity'">
+                                    <div v-if="q_gl_ent">
+                                        <div class="input-group mb-2">
+                                            <input class="form-control form-control-solid" type="search" placeholder="Find.." v-model="q_gl_inp" v-on:keyup="xqry(q_gl_inp,q_gl_ent,'entity',q_gl_pg,10)">
+                                            <span class="input-group-text border-0" v-on:click="xqry('?',q_gl_ent)"><i class="bi bi-search"></i></span>
+                                        </div>
+
+                                        <div class="table-responsive mh-600px">
+                                            <table class="table table-condensed align-middle table-row-dashed table-hover no-footer my-1">
+                                                <thead class="border-bottom border-gray-200 fs-7 bg-dark fw-bold">
+                                                    <tr>
+                                                        <th class="text-start text-muted text-uppercase cursor-pointer p-2" v-on:click="sortTable(q_res,key,1)" v-for="key in objKeys(q_res[0])">{{key}}</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr v-for="A in q_res" class="cursor-pointer" data-bs-dismiss="modal" v-on:click="xqry_nav(A['xf_id']);">
+                                                        <td class="p-2" v-for="key in objKeys(A)">{{A[key]}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                    <div v-else>
+                                        <!--Show entity list-->
+                                        <div class="input-group mb-2">
+                                            <input class="form-control form-control-solid form-control-sm" type="search" placeholder="Select.." v-model="q_gl_filter">
+                                            <span class="input-group-text border-0"><i class="bi bi-search"></i></span>
+                                        </div>
+                                        <div>
+                                            <span v-for="q in dtfilter(xf_entities,q_gl_filter)">
+                                                <span v-if="q.a" class="badge btn btn-primary fw-light p-2 m-1 rounded-1" v-on:click="init(q.name,-1)" data-bs-dismiss="modal">{{q.hdr}}</span>
+                                                <span v-else class="badge btn btn-light fw-normal p-2 m-1 rounded-1" v-on:click="q_gl_filter='';q_gl_prefix='';q_gl_ent=q.name;q_gl_hdr=q.hdr;">
+                                                    {{q.hdr}}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="modal-footer py-4 border-top-dashed">
+                                <span v-if="q_mode=='entity' && q_gl_ent" class="link-success cursor-pointer h5" v-on:click="init(q_gl_ent,-1)" data-bs-dismiss="modal">Create New</span>
+                                <span v-if="q_mode=='meta'" class="btn btn-dark btn-sm fw-light" v-on:click="xfm_get(q_gl_ent,'_','_')" data-bs-dismiss="modal">Create New {{q_gl_hdr}}</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!--end::Modal Search-->
+                <!--Modal Image Compress-->
+                <div class="modal fade" data-bs-backdrop="static" v-bind:class="[ximg.c ?'show d-block':'']">
+                    <div class="modal-dialog modal-xl shadow-lg bg-light-dark">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div class="h2 fw-bolder me-2 text-hover-primary cursor-pointer" v-on:click="img_oncanvas_ok()">
+                                    <span class="me-2">Confirm Image</span>
+                                    <i class="bi bi-check-circle"></i>
+                                </div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" v-on:click="ximg.c='',ximg.a='';"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="text-center p-4 overflow-auto" style="max-height:80vh">
+                                    <canvas id="xf_imgoncanvas" width="800" height="800"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--end: Modal Image Compress-->
+                <!------>
+                <!--Error Notification-->
+                <div id="xferrornotification" class="fixed-bottom w-100 p-2" v-show="e" v-on:click="alertdismiss()">
+                    <div v-bind:class="[e==1 ?'bg-success rounded p-4':'bg-danger rounded p-4']">
+                        <span v-if="e==1">
+                            <i class="bi bi-chat-right-text text-white fs-3"></i>
+                            <span class="fs-5 text-white mx-4">{{ex}}</span>
+                        </span>
+                        <span v-if="e==-1" class="fw-bold fs-4">
+                            <i class="bi bi-exclamation-circle text-white fs-3"></i>
+                            <span class="fw-bolder text-danger mx-1">Error</span>
+                            <span class="fs-5 text-white mx-4">{{ex}}</span>
+                        </span>
+                        <span class="fs-4">
+                            <i class="bi bi-x text-white"></i>
+                        </span>
+                    </div>
+                </div>
+                <!------------------------------------------------------------->
+
+
+            </div>
+            <!--begin::Spinner-->
+            <div id="spinner" class="position-absolute vh-100 vw-100 top-0">
+                <div class="position-absolute top-50 start-50"><span class="spinner-border h-15px w-15px align-middle text-gray-400"></span></div>
+            </div>
+
+            <!--begin::Scrolltop-->
+            <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+                <!--begin::Svg Icon | path: icons/duotone/Navigation/Up-2.svg-->
+                <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <rect fill="#000000" opacity="0.5" x="11" y="10" width="2" height="10" rx="1" />
+                            <path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
+                        </g>
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+            </div>
+            <!--end::Scrolltop-->
+        </div>
+
+        <!--Initialise on mount-->
+        <div @vue:mounted="jwt_sign_in()"></div>
+    </div>
+
+
+
+    <!--end::Main-->
+    <!--begin::Javascript-->
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="/assets/js/widgets.js"></script>
+
+    <script src="/assets/js/calean.min.js"></script>
+
+    <script type="text/javascript">
+        var caleandar_settings = { Color: '#000', LinkColor: '#333', EventClick: '', DisabledDays: [0] }
+
+        var cpal0 = ["#fabc2a", "#ffcab1", "#f38d68", "#ee6c4d", "#f76f8e", "#f2bac9", "#7fd8be", "#a1fcdf", "#3b5249", "#519872"];
+
+    </script>
+
+    <!--end::Page Custom Javascript-->
+
+    <script src="/xpv.js"></script>
+
+    <script type="text/javascript">
+
+        //ppvue initialise------------------------
+        var state = ppvue.createApp(vz).mount();
+
+        window.onpopstate = function (e) {
+            if (e.state) { if (e.state.x) { vz.xi_z = true; vz.init(e.state.x, e.state.i); } }
+        }
+        function spinner(a) {
+            var d = document.getElementById("spinner");
+            if (a) { if (d) { d.style.display = "block"; } document.body.style.cursor = "wait"; } else { if (d) { d.style.display = "none"; } document.body.style.cursor = "default"; }
+        }
+
+
+        //kurko calendar render function
+        function eventCalendarInit(el, a) {
+            vz.xc[a] = new EventCalendar(el, {
+                view: "dayGridMonth",
+                height: "680px",
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                eventTimeFormat: { hour: '2-digit', minute: '2-digit' },
+                slotDuration: '00:15:00', slotMinTime: '06:30:00', slotMaxTime: '21:30:00',
+                events: vz.xy[a].p10,
+                dayMaxEvents: false,
+                nowIndicator: true,
+                selectable: false,
+                eventClick: function (info) {
+                    vz.redirect(vz.xy[a].p2, info.event.id);
+                },
+                datesSet: function (info) {
+                    if (vz.xz.xf_z) { vz.xz[a] = info.view.activeStart.toISOString(); vz.xpost(); } else { vz.xz.xf_z = 1; }
+                }
+            });
+        }
+    </script>
+
+
+
+</body>
+<!--end::Body-->
+</html>

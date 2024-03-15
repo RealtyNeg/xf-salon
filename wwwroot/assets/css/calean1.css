@@ -1,0 +1,133 @@
+.cld-main {
+    width: 100%;
+min-width:200px;
+}
+
+    .cld-main a {
+        color: #333;
+        font-weight: bold;
+    }
+
+.cld-datetime {
+    position: relative;
+    width: 66%;
+    min-width: 100px;
+    max-width: 300px;
+    margin: auto;
+    padding: 8px 0;
+    overflow: hidden;
+}
+
+    .cld-datetime .today {
+        position: relative;
+        float: left;
+        width: calc(100% - 40px);
+        margin: auto;
+        text-align: center;
+    }
+
+.cld-nav {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    padding: 2px;
+}
+
+    .cld-nav:hover {
+        cursor: pointer;
+    }
+
+        .cld-nav:hover svg {
+            fill: #666;
+        }
+
+.cld-rwd {
+    float: left;
+}
+
+.cld-fwd {
+    float: right;
+}
+
+.cld-nav svg:hover {
+}
+
+.cld-labels {
+    padding: 2px 0;
+    background-color: #ededed;
+    margin-bottom:0.5rem;
+}
+
+
+.cld-days {
+    padding-left: 0;
+}
+
+.cld-label, .cld-day {
+    display: inline-block;
+    width: 14.28%;
+    text-align: center;
+}
+
+    .cld-day.today .cld-number {
+        display: inline-block;
+        background: #f2f2f2;
+        color: #0082ff;
+    }
+
+    .cld-day.disableDay {
+        opacity: 0.5;
+    }
+
+    .cld-day.nextMonth, .cld-day.prevMonth {
+        opacity: 0.33;
+    }
+
+.cld-number {
+    position: relative;
+    margin: 5px;
+    padding: 5px;
+}
+
+.cld-title {
+    position: absolute;
+    z-index: 5;
+    display: none;
+    top: 30px;
+    left: 0;
+    padding: 5px 10px;
+    background: #fff;
+    white-space: nowrap;
+}
+
+.cld-number:hover .cld-title {
+    display: block;
+}
+
+.cld-title::before {
+    content: '';
+    position: absolute;
+    top: -7.5px;
+    left: 7.5px;
+    width: 0;
+    height: 0;
+    border-left: 7.5px solid transparent;
+    border-right: 7.5px solid transparent;
+    border-bottom: 7.5px solid #ccc;
+}
+
+.cld-number.eventday {
+    display: inline-block;
+    background-color: #acffd9;
+    border: 1px solid #00e77d;
+    padding: .2rem .4rem;
+}
+
+    .cld-number.eventday:hover {
+        cursor: pointer;
+        background: #eee;
+    }
+
+.today .cld-number.eventday:hover {
+    background: #888;
+}

@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Salon Services</title>
+
+    <!--== Favicon ==-->
+    <link rel="apple-touch-icon" href="./assets/img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="./assets/img/favicon.ico">
+
+
+    <!--== Google Fonts ==-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!--ppvue -->
+    <script src="/ppvue.js"></script>
+    <!------>
+    <!--== Bootstrap CSS ==-->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet" />
+    <!--== Ionicon CSS ==-->
+    <link href="./assets/css/ionicons.min.css" rel="stylesheet" />
+    <!--== Simple Line Icon CSS ==-->
+    <link href="./assets/css/simple-line-icons.css" rel="stylesheet" />
+    <!--== Line Icons CSS ==-->
+    <link href="./assets/css/lineIcons.css" rel="stylesheet" />
+    <!--== Font Awesome Icon CSS ==-->
+    <link href="./assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!--== Animate CSS ==-->
+    <link href="./assets/css/animate.css" rel="stylesheet" />
+    <!--== Swiper CSS ==-->
+    <link href="./assets/css/swiper.min.css" rel="stylesheet" />
+    <!--== Range Slider CSS ==-->
+    <link href="./assets/css/range-slider.css" rel="stylesheet" />
+    <!--== Fancybox Min CSS ==-->
+    <link href="./assets/css/fancybox.min.css" rel="stylesheet" />
+    <!--== Slicknav Min CSS ==-->
+    <link href="./assets/css/slicknav.css" rel="stylesheet" />
+    <!--== Owl Carousel Min CSS ==-->
+    <link href="./assets/css/owlcarousel.min.css" rel="stylesheet" />
+    <!--== Owl Theme Min CSS ==-->
+    <link href="./assets/css/owltheme.min.css" rel="stylesheet" />
+    <!--== Spacing CSS ==-->
+    <link href="./assets/css/spacing.css" rel="stylesheet" />
+
+    <!--== Main Style CSS ==-->
+    <link href="./assets/css/style.css" rel="stylesheet" />
+
+    <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <!--wrapper start-->
+    <div v-scope v-cloak>
+        <div id="xf_div_app" class="wrapper home-default-wrapper">
+
+            <!--== Start Preloader Content ==-->
+            <div id="spinner" class="preloader-wrap">
+                <div class="preloader">
+                    <span class="dot"></span>
+                    <div class="dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <!--== End Preloader Content ==-->
+            <!--== Start Header Wrapper ==-->
+            <header class="header-area header-default header-style2">
+
+                <!--== Start Header Top ==-->
+                <div class="header-top">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-4 hidden-md-down">
+                                <div class="contact-email">
+                                    <span>
+                                        Email us:
+                                        <a href="mailto:info@salonsmalta.com">info@salonsmalta.com</a>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4 text-md-start text-lg-center text-center">
+                                <p>Free delivery over €50</p>
+                            </div>
+                            <div class="col-md-6 col-lg-4 text-md-end text-center mt-sm-15">
+                                <div class="theme-setting mr-0" v-if="xa.jwt">
+                                    <a class="dropdown-btn" href="#" role="button">
+                                        Account
+                                        <i class="ion-ios-arrow-down"></i>
+                                    </a>
+                                    <ul class="dropdown-content">
+                                        <li>
+                                            <a href="my-account.html">My account</a>
+                                        </li>
+                                        <li>
+                                            <a href="checkout.html">Checkout</a>
+                                        </li>
+                                        <li>
+                                            <a href="login.html">Sign out</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="theme-guest" v-else>
+                                    <a href="my-account.html">Create an account</a>
+                                    <span class="text-white">|</span>
+                                    <a href="login.html">Sign in</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--== End Header Top ==-->
+                <!--== Start Header Middle ==-->
+                <div class="header-middle hidden-md-down">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col col-md-4 col-sm-12">
+                                <div class="contact-link">
+                                    <div class="contact-info">
+                                        <span class="phone">
+                                            Call Us:
+                                            <a href="tel:(+356)21449236">(+356) 21449236</a>
+                                        </span>
+                                        <div class="time-contact">Mon-Sat 09:00-19:00</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col col-md-4 col-sm-12">
+                                <div class="header-logo-area text-center">
+                                    <a href="index.html">
+                                        <img class="logo-main"
+                                             src="/assets/img/logo.png"
+                                             alt="Logo" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col col-md-4 col-sm-12">
+                                <div class="header-action-area float-end">
+                                    <div class="search-content-wrap">
+                                        <button class="btn-search">
+                                            <span class="icon icon-search icon-magnifier"></span>
+                                        </button>
+                                        <div class="btn-search-content">
+                                            <form action="#" method="post">
+                                                <div class="form-input-item">
+                                                    <input type="text"
+                                                           placeholder="Enter your search key ..." />
+                                                    <button type="submit" class="btn-src">
+                                                        <i class="icon-magnifier"></i>
+                                                    </button>
+                                                    <div class="search-categorie">
+                                                        <select class="form-select" name="poscats">
+                                                            <option selected>All categories</option>
+                                                            <option value="1">Beauty &amp; Health</option>
+                                                            <option value="2">- - Makeup</option>
+                                                            <option value="3">- - - - Eyes</option>
+                                                            <option value="4">- - - - Lips</option>
+                                                            <option value="5">- - - - Face</option>
+                                                            <option value="6">- - - - Makeup Tools</option>
+                                                            <option value="7">- - Skin Care</option>
+                                                            <option value="8">- - - - Face</option>
+                                                            <option value="9">- - - - Eyes</option>
+                                                            <option value="10">- - - - Body</option>
+                                                            <option value="11">- - - - Skin Care Tools</option>
+                                                            <option value="12">- - Health Care</option>
+                                                            <option value="13">
+                                                                - - - - Massage &amp; Relaxation
+                                                            </option>
+                                                            <option value="14">
+                                                                - - - - Household Health Monitors
+                                                            </option>
+                                                            <option value="15">- - - - Chinese Medicine</option>
+                                                            <option value="16">
+                                                                - - - - Personal Health Care Items
+                                                            </option>
+                                                            <option value="17">- - Nail Art &amp; Tools</option>
+                                                            <option value="18">- - - - Gel Nail Polish</option>
+                                                            <option value="19">- - - - Nail Drills</option>
+                                                            <option value="20">- - - - Nail Dryers</option>
+                                                            <option value="21">- - - - Nail Glitter</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <div class="shop-button-group">
+                                        <div class="shop-button-item">
+                                            <a class="shop-button" href="wishlist.html">
+                                                <i class="icon-heart icon"></i>
+                                                <sup class="shop-count">2</sup>
+                                            </a>
+                                        </div>
+                                        <div class="shop-button-item">
+                                            <a class="shop-button" href="#">
+                                                <i class="icon-bag icon"></i>
+                                                <sup class="shop-count">2</sup>
+                                                <span class="cart-total">€58.32</span>
+                                            </a>
+                                            <div class="popup-cart-content">
+                                                <ul class="popup-product-list">
+                                                    <li class="product-list-item">
+                                                        <a href="product-single.html">
+                                                            <img src="/assets/img/shop/cart-01.jpg"
+                                                                 alt="Image-HasTech" />
+                                                            <span class="product-title">
+                                                                Juicy Couture Juicy Quilted Terry Track
+                                                                Jacket
+                                                            </span>
+                                                            <span class="product-quantity">1x</span>
+                                                        </a>
+                                                        <span class="product-price">€43.80</span>
+                                                        <span class="product-size">Size: S</span>
+                                                        <a class="product-close" href="#">
+                                                            <i class="la la-close"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="product-list-item">
+                                                        <a href="product-single.html">
+                                                            <img src="/assets/img/shop/cart-02.jpg"
+                                                                 alt="Image-HasTech" />
+                                                            <span class="product-title">
+                                                                Trans-Weight Hooded Wind and Water Resistant
+                                                                Shell
+                                                            </span>
+                                                            <span class="product-quantity">1x</span>
+                                                        </a>
+                                                        <span class="product-price">€14.52</span>
+                                                        <a class="product-close" href="#">
+                                                            <i class="la la-close"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <div class="price-content">
+                                                    <div class="cart-subtotals">
+                                                        <div class="products">
+                                                            <span class="label">Subtotal</span>
+                                                            <span class="value">€58.32</span>
+                                                        </div>
+                                                        <div class="products">
+                                                            <span class="label">Shipping</span>
+                                                            <span class="value">Free</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="cart-total">
+                                                        <span class="label">Total</span>
+                                                        <span class="value">€58.32</span>
+                                                    </div>
+                                                </div>
+                                                <div class="checkout">
+                                                    <a href="checkout.html" class="btn-Checkout">Checkout</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--== End Header Middle ==-->
+                <!--== Start Header Bottom ==-->
+                <div class="header-bottom sticky-header hidden-md-down">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col col-12 position-relative">
+                                <div class="header-align align-default justify-content-center">
+                                    <div class="header-navigation-area hidden-md-down">
+                                        <ul class="main-menu nav position-relative">
+                                            <li>
+                                                <a href="">Home</a>
+                                            </li>
+                                            <li class="has-submenu full-width">
+                                                <a href="#">Categories</a>
+                                                <!--XF dynamic menu------------------------>
+                                                <ul v-if="xe.nav" class="submenu-nav submenu-nav-mega submenu-nav-width mt-0">
+                                                    <li v-for="L in xe.nav.y.dto.p10[0].filter(q=>q.Level==1)" class="mega-menu-item">
+                                                        <a href="#" class="mega-title">{{L.Name}}</a>
+                                                        <ul v-if="L.Subs" class="ml-10" style="max-height:50vh;overflow:auto;">
+                                                            <li v-for="L2 in xe.nav.y.dto.p10[0].filter(q=>q.Level==2&&q.ParentStockGroupID==L.StockGroupID)">
+                                                                <a class="fw-bold" v-on:click="xz=ob_ss_prodbystkgrp(L2.StockGroupID);xpost();">{{L2.Name}}</a>
+                                                                <ul v-if="L2.Subs" class="ml-10">
+                                                                    <li v-for="L3 in xe.nav.y.dto.p10[0].filter(q=>q.Level==3&&q.ParentStockGroupID==L2.StockGroupID)">
+                                                                        <a v-on:click="xz=ob_ss_prodbystkgrp(L3.StockGroupID);xpost();">{{L3.Name}}</a>
+                                                                        <ul v-if="L3.Subs" class="ml-10">
+                                                                            <li v-for="L4 in xe.nav.y.dto.p10[0].filter(q=>q.Level==4&&q.ParentStockGroupID==L3.StockGroupID)">
+                                                                                <a v-on:click="xz=ob_ss_prodbystkgrp(L4.StockGroupID);xpost();">{{L4.Name}}</a>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                                <!--End XF dynamic menu-->
+                                            </li>
+                                            <li class="has-submenu">
+                                                <a href="#">Brands</a>
+                                                <!--XF dynamic menu------------------------>
+                                                <ul v-if="xe.nav" class="submenu-nav">
+                                                    <li v-for="B in xe.nav.y.dto.p10[1].filter(q=>q.Level==1)" class="has-submenu">
+                                                        <a href="#">{{B.Name}}</a>
+                                                        <ul v-if="B.Subs" class="submenu-nav ml-50 my-auto">
+                                                            <li v-for="L in xe.nav.y.dto.p10[1].filter(q=>q.Level==2&&q.ParentID==B.BrandID)">
+                                                                <a class="fw-bold" v-on:click="xz=ob_ss_prodbystkgrp(L.BrandID);xpost();">{{L.Name}}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                                <!--End XF dynamic menu-->
+                                            </li>
+                                            <li><a href="contact.html">Contact us</a></li>
+                                            <li><a href="about-us.html">About Us</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--== End Header Bottom ==-->
+                <!--== Start Responsive Header ==-->
+                <div class="responsive-header">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="header-item">
+                                    <button class="btn-menu" type="button"><i class="icon-menu"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="header-item justify-content-center">
+                                    <div class="header-logo-area">
+                                        <a href="index.html">
+                                            <img class="logo-main" src="assets/img/logo.png" alt="Logo" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="header-item justify-content-end">
+                                    <button class="btn-user" onclick="window.location.href='my-account.html'"><i class="icon-user"></i></button>
+                                    <button class="btn-cart" onclick="window.location.href='cart.html'"><i class="icon-bag"></i> <span class="item-count">2</span></button>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="responsive-search-content">
+                                    <form action="#">
+                                        <div class="form-input-item">
+                                            <input type="text" placeholder="Enter your search key ...">
+                                            <button type="submit" class="btn-src">
+                                                <i class="icon-magnifier"></i>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--== End Responsive Header ==-->
+            </header>
+            <!--== End Header Wrapper ==-->
+
+            <main class="main-content pt-4" v-if="!xz.xf_entity">
+
+                <!--== Start Featured Products Area Wrapper ==-->
+                <section class="home-slider-area">
+                    <div class="swiper-container swiper-pagination-style dots-bg-light home-slider-container default-slider-container">
+                        <div class="swiper-wrapper home-slider-wrapper slider-default">
+                            <div class="swiper-slide">
+                                <div class="slider-content-area" data-bg-img="assets/img/slider/slider-04.jpg">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-10 col-sm-6 col-md-5">
+                                                <div class="slider-content slider-content-light animate-pulse">
+                                                    <h5 class="sub-title transition-slide-0">A SKINCARE ESSENTIAL</h5>
+                                                    <h2 class="title transition-slide-1 mb-0"><span class="font-weight-400">100% NATURAL</span></h2>
+                                                    <h2 class="title transition-slide-2">FACIAL OILS</h2>
+                                                    <a class="btn-slide transition-slide-3" href="#/">Shop Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="slider-content-area" data-bg-img="assets/img/slider/slider-05.jpg">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-10 col-sm-6 col-md-5">
+                                                <div class="slider-content slider-content-light animate-flipInX">
+                                                    <h5 class="sub-title transition-slide-0">ONE STEP MAXI BRUSH</h5>
+                                                    <h2 class="title transition-slide-1 mb-0"><span class="font-weight-400">GOLDEN ROSE</span></h2>
+                                                    <h2 class="title transition-slide-2">RICH COLOUR</h2>
+                                                    <a class="btn-slide transition-slide-3" href="#/">Shop Now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--== Add Swiper Pagination ==-->
+                        <div class="swiper-pagination"></div>
+                    </div>
+                </section>
+                <!--== End Featured Products Wrapper ==-->
+
+                <section>
+                    <div class="container pt-95 pb-100 pt-lg-70 pb-lg-70 text-center">
+                        <h1 class="display-6 fw-bold">Welcome to Salon Services</h1>
+                        <div class="col-12">
+                            <p class="lead">
+                                We take great pride in providing an extensive array of top-notch, globally recognized brands that meet <b>ALL YOUR SALON'S REQUIREMENTS</b> – whether it's furnishing the salon with equipment, offering specialized training, or supplying essential products.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!--== Start New Arrivals Area Wrapper ==-->
+                <section class="product-area">
+                    <div class="container pt-5 pb-45">
+                        <div class="row">
+                            <div class="col-sm-8 m-auto">
+                                <div class="section-title text-center">
+                                    <h2 class="title">New Arrivals</h2>
+                                    <div class="desc">
+                                        <p>Check out the new additions to our catalog of products!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="product-slider owl-carousel owl-theme">
+                                    <div class="item">
+                                        <div class="product-item mb-30">
+                                            <div class="inner-content">
+                                                <div class="product-thumb">
+                                                    <a href="single-product.html">
+                                                        <img src="assets/img/shop/01.jpg" alt="Image-HasTech">
+                                                        <img class="second-image" src="assets/img/shop/01-h1.jpg" alt="Image-HasTech">
+                                                    </a>
+                                                    <div class="product-action">
+                                                        <div class="addto-wrap">
+                                                            <a class="add-wishlist" href="wishlist.html" title="Add to wishlist">
+                                                                <i class="icon-heart icon"></i>
+                                                            </a>
+                                                            <a class="add-compare" href="compare.html" title="Add to compare">
+                                                                <i class="icon-shuffle icon"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="product-flag">
+                                                        <li class="new">New</li>
+                                                        <li class="discount">-10%</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="product-desc">
+                                                    <div class="product-info">
+                                                        <h4 class="title"><a href="single-product.html">Originals Kaval Windbreaker Winter Jac...</a></h4>
+                                                        <div class="star-content">
+                                                            <i class="ion-md-star"></i>
+                                                            <i class="ion-md-star"></i>
+                                                            <i class="ion-md-star"></i>
+                                                            <i class="ion-md-star"></i>
+                                                            <i class="ion-md-star"></i>
+                                                        </div>
+                                                        <div class="prices">
+                                                            <span class="price-old">€29.16</span>
+                                                            <span class="price">€26.24</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-footer">
+                                                        <a class="btn-product-add" href="single-product.html">Add to cart</a>
+                                                        <a class="btn-quick-view" href="javascript:;" title="Quick view">Quick view</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--== End New Arrivals Area Wrapper ==-->
+                <!--== Start Promotions Area Wrapper ==-->
+                <section class="product-area">
+                    <div class="container pt-5 pb-45">
+                        <div class="row">
+                            <div class="col-sm-8 m-auto">
+                                <div class="section-title text-center">
+                                    <h2 class="title">Sales and Promotions</h2>
+                                    <div class="desc">
+                                        <p>Sales and price reductions</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="product-slider owl-carousel owl-theme">
+                                    <div class="item">
+                                        <div class="product-item mb-30">
+                                            <div class="inner-content">
+                                                <div class="product-thumb">
+                                                    <a href="single-product.html">
+                                                        <img src="assets/img/shop/01.jpg" alt="Image-HasTech">
+                                                        <img class="second-image" src="assets/img/shop/01-h1.jpg" alt="Image-HasTech">
+                                                    </a>
+                                                    <div class="product-action">
+                                                        <div class="addto-wrap">
+                                                            <a class="add-wishlist" href="wishlist.html" title="Add to wishlist">
+                                                                <i class="icon-heart icon"></i>
+                                                            </a>
+                                                            <a class="add-compare" href="compare.html" title="Add to compare">
+                                                                <i class="icon-shuffle icon"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <ul class="product-flag">
+                                                        <li class="new">New</li>
+                                                        <li class="discount">-10%</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="product-desc">
+                                                    <div class="product-info">
+                                                        <h4 class="title"><a href="single-product.html">Originals Kaval Windbreaker Winter Jac...</a></h4>
+                                                        <div class="star-content">
+                                                            <i class="ion-md-star"></i>
+                                                            <i class="ion-md-star"></i>
+                                                            <i class="ion-md-star"></i>
+                                                            <i class="ion-md-star"></i>
+                                                            <i class="ion-md-star"></i>
+                                                        </div>
+                                                        <div class="prices">
+                                                            <span class="price-old">€29.16</span>
+                                                            <span class="price">€26.24</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-footer">
+                                                        <a class="btn-product-add" href="single-product.html">Add to cart</a>
+                                                        <a class="btn-quick-view" href="javascript:;" title="Quick view">Quick view</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!--== End Promotions Area Wrapper ==-->
+                <!--== Start Brand Area Wrapper ==-->
+                <section class="blog-area">
+                    <div class="container pt-95 pb-100 pt-lg-70 pb-lg-70">
+                        <div class="row">
+                            <div class="col-sm-8 m-auto">
+                                <div class="section-title text-center">
+                                    <h2 class="title">Our Partners</h2>
+                                    <div class="desc">
+                                        <p>Reputed Suppliers of Beauty &amp; Grooming Products from Around the World</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-lg-1 col-md-3 col-sm-6 col-12 mb-1 mb-md-0"
+                                         v-for="B in xe.nav.y.dto.p10[1].filter(q=>q.Level==1)">
+                                        <img :src="B.LogoPath"
+                                             class="img-fluid w-100 shadow-1-strong rounded mb-4"
+                                             alt="{{B.Name}}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!--
+                <div class="col-12">
+                    <div class="row">
+                        <div class="brand-slider owl-carousel owl-theme">
+
+                                        <div class="item" v-for="B in xe.nav.y.dto.p10[1].filter(q=>q.Level==1)">
+                                            <div class="post-item">
+                                                <div class="inner-content">
+                                                    <div class="thumb mh-150px">
+                                                        <a href="#"><img :src="B.LogoPath" class="img"></a>
+                                                    </div>
+                                                    <div class="content">
+                                                        <a class="category" href="#">{{B.Name}}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                        </div>
+
+                    </div>-->
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-black-color">
+                    <div class="container pt-35 pb-40">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="contact-info contact-info-static">
+                                    <div class="row">
+                                        <div class="col-border col-12 col-md-4 col-sm-6 border-0">
+                                            <div class="info-item">
+                                                <div class="icon-box">
+                                                    <i class="icon las la-phone-volume"></i>
+                                                </div>
+                                                <p>(+356) 21449236 M-S 9AM-7PM</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-border col-12 col-md-4 col-sm-6 mt-xs-35">
+                                            <div class="info-item">
+                                                <div class="icon-box">
+                                                    <i class="icon las la-envelope"></i>
+                                                </div>
+                                                <p>info@salonsmalta.com</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-border col-12 col-md-4 col-sm-12 mt-sm-35">
+                                            <div class="info-item">
+                                                <div class="icon-box">
+                                                    <i class="icon lab la-facebook-messenger"></i>
+                                                </div>
+                                                <p>Virtual Chat 24/7 | Live M-S 9am-7pm</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="divider-area">
+                    <div class="container pt-90 pt-lg-70 pb-lg-60">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="divider-style-wrap">
+                                    <div class="row">
+                                        <div class="col-md-6 mx-auto">
+                                            <div class="divider-content text-center">
+                                                <h4 class="title hidden-sm-down">Follow us on </h4>
+                                                <h4 class="title2 hidden-md-up collapsed" data-bs-toggle="collapse" data-bs-target="#dividerId-1">Follow us on </h4>
+                                                <div id="dividerId-1" class="collapse">
+                                                    <div class="social-icons">
+                                                        <a href="https://www.facebook.com/salonservices.malta/"><i class="la la-facebook"></i></a>
+                                                        <a href="https://www.instagram.com/salonservicesmt/"><i class="la la-instagram"></i></a>
+                                                    </div>
+                                                    <p class="mb-sm-25">
+                                                        Follow us on your favorite platforms. Check us out on facebook, and take a look at our snaps on instagram.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                              
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!--== Start Footer Area Wrapper ==-->
+            <footer class="footer-area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <!--== Start Footer Widget Area ==-->
+                            <div class="footer-widget-area pb-30">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="widget-item">
+                                            <div class="about-widget">
+                                                <div class="inner-content">
+                                                    <div class="footer-logo">
+                                                        <a href="index.html">
+                                                            <img class="logo-light" src="./assets/img/logo-light.png" alt="Logo" />
+                                                        </a>
+                                                    </div>
+                                                    <p>"Somnium" Triq it-Torri, Is-Swatar, Malta, Is-Swatar, Malta</p>
+                                                </div>
+                                                <div class="widget-desc">
+                                                    <p>
+                                                        Bringing the Best Brands to Your Salon - Catering to Every Need!
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="widget-item">
+                                            <div class="widget-menu-wrap">
+                                                <ul class="nav-menu">
+                                                    <li><a href="#/">Home</a></li>
+                                                    <li><a href="#new-arrivals">New Arrivals</a></li>
+                                                    <li><a href="#special-offers">Special Offers</a></li>
+                                                    <li><a href="contact.html">Shopping Cart</a></li>
+                                                    <li><a href="about-us.html">About us</a></li>
+                                                    <li><a href="contact.html">Contact us</a></li>
+                                                    <li><a href="terms.html">Terms & Conditions</a></li>
+                                                    <li><a href="privacy.html">Privacy Policy</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--== End Footer Widget Area ==-->
+                        </div>
+                    </div>
+                </div>
+                <!--== Start Footer Bottom Area ==-->
+                <div class="footer-bottom">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <p class="copyright">Copyright © 2024 All Rights Reserved.</p>
+                            </div>
+                            <div class="col-lg-4 text-center">
+                                Powered by <a href="http://www.focus.com.mt/">Premium Business Solutions</a>.
+                            </div>
+                            <div class="col-lg-4 text-end">
+                                Managed by <a href="http://www.focus.com.mt/products/focus-360">Focus 360 ERP Suite</a>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--== End Footer Bottom Area ==-->
+            </footer>
+            <!--== End Footer Area Wrapper ==-->
+            <!--== Scroll Top Button ==-->
+            <div id="scroll-to-top" class="scroll-to-top"><span class="ion-md-arrow-up"></span></div>
+
+            <!--== Start Side Menu ==-->
+            <aside class="off-canvas-wrapper">
+                <div class="off-canvas-inner">
+                    <div class="off-canvas-overlay"></div>
+                    <!-- Start Off Canvas Content Wrapper -->
+                    <div class="off-canvas-content">
+                        <!-- Off Canvas Header -->
+                        <div class="off-canvas-header">
+                            <div class="close-action">
+                                <button class="btn-menu-close">menu<i class="icon-arrow-left"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="off-canvas-item">
+                            <!-- Start Mobile Menu Wrapper -->
+                            <div class="res-mobile-menu menu-active-one">
+                                <!-- Note Content Auto Generate By Jquery From Main Menu -->
+                            </div>
+                            <!-- End Mobile Menu Wrapper -->
+                        </div>
+                    </div>
+                    <!-- End Off Canvas Content Wrapper -->
+                </div>
+            </aside>
+            <!--== End Side Menu ==-->
+            <!--== Start Popup Product  ==-->
+            <div class="popup-product-quickview">
+                <div class="product-single-item">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <!--== Start Product Thumbnail Area ==-->
+                            <div class="product-thumb">
+                                <div class="swiper-container single-product-thumb-content single-product-thumb-slider">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <a href="#/">
+                                                <img src="assets/img/shop/product-single/05.jpg" alt="SalonServices">
+                                                <span class="product-flag-new">New</span>
+                                            </a>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <a href="#/">
+                                                <img src="assets/img/shop/product-single/06.jpg" alt="SalonServices">
+                                                <span class="product-flag-new">New</span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="swiper-container single-product-nav-content single-product-nav-slider">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <img src="assets/img/shop/product-single/nav-05.jpg" alt="SalonServices">
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <img src="assets/img/shop/product-single/nav-06.jpg" alt="SalonServices">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--== End Product Thumbnail Area ==-->
+                        </div>
+                        <div class="col-md-6">
+                            <!--== Start Product Info Area ==-->
+                            <div class="product-single-info mt-sm-70">
+                                <h1 class="title">Water And Wind Resistant Insulated Jacket</h1>
+                                <div class="product-info">
+                                    <div class="star-content">
+                                        <i class="ion-md-star"></i>
+                                        <i class="ion-md-star"></i>
+                                        <i class="ion-md-star"></i>
+                                        <i class="ion-md-star"></i>
+                                        <i class="ion-md-star icon-color-gray"></i>
+                                    </div>
+                                    <ul class="comments-advices">
+                                        <li><a href="#/" class="reviews"><i class="fa fa-commenting-o"></i>Read reviews (1)</a></li>
+                                        <li><a href="#/" class="comment"><i class="fa fa-pencil-square-o"></i>Write a review</a></li>
+                                    </ul>
+                                </div>
+                                <div class="prices">
+                                    <span class="price">€14.52</span>
+                                    <div class="tax-label">Tax included</div>
+                                </div>
+                                <div class="product-description">
+                                    <ul class="product-desc-list">
+                                        <li>Stay ready for a change in weather with the IZOD® Water and Wind Resistant Insulated Jacket.</li>
+                                        <li>Water-resistant jacket keeps you warm and dry.</li>
+                                        <li>Stand collar features an attached hood.</li>
+                                        <li>Front-zip closure.</li>
+                                    </ul>
+                                </div>
+                                <div class="product-quick-action">
+                                    <div class="product-quick-qty">
+                                        <div class="pro-qty">
+                                            <input type="text" id="quantity" title="Quantity" value="1">
+                                        </div>
+                                    </div>
+                                    <a class="btn-product-add" href="single-product.html">Add to cart</a>
+                                </div>
+                                <div class="product-wishlist-compare">
+                                    <a href="#" class="btn-wishlist"><i class="icon-heart"></i>Add to wishlist</a>
+                                    <a href="#" class="btn-compare"><i class="icon-shuffle"></i>Add to compare</a>
+                                </div>
+                                <div class="social-sharing">
+                                    <span>Share</span>
+                                    <div class="social-icons">
+                                        <a href="#/"><i class="la la-facebook"></i></a>
+                                        <a href="#/"><i class="la la-twitter"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--== End Product Info Area ==-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-product-overlay"></div>
+            <button class="popup-product-close"><i class="la la-close"></i></button>
+            <!--== End Popup Product  ==-->
+        </div>
+
+        <!--Initialise on mount-->
+        <div @vue:mounted="jwt_sign_in(1)"></div>
+        <div @vue:mounted="jwt_anon()"></div>
+        <div v-if="xa.jwt" @vue:mounted="init_xe('nav','/api/xf_get/ss_nav/0')"></div>
+    </div>
+
+    <!--=======================Javascript============================-->
+    <!--=== Modernizr Min Js ===-->
+    <script src="./assets/js/modernizr.js"></script>
+    <!--=== jQuery Min Js ===-->
+    <script src="./assets/js/jquery-main.js"></script>
+    <!--=== jQuery Migration Min Js ===-->
+    <script src="./assets/js/jquery-migrate.js"></script>
+    <!--=== Bootstrap Min Js ===-->
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <!--=== jQuery Appear Js ===-->
+    <script src="./assets/js/jquery.appear.js"></script>
+    <!--=== jQuery Swiper Min Js ===-->
+    <script src="./assets/js/swiper.min.js"></script>
+    <!--=== jQuery Fancy Box Min Js ===-->
+    <script src="./assets/js/fancybox.min.js"></script>
+    <!--=== jQuery Slick Nav Js ===-->
+    <script src="./assets/js/slicknav.js"></script>
+    <!--=== jQuery Waypoints Js ===-->
+    <script src="./assets/js/waypoints.js"></script>
+    <!--=== jQuery Owl Carousel Min Js ===-->
+    <script src="./assets/js/owlcarousel.min.js"></script>
+    <!--=== jQuery Match Height Min Js ===-->
+    <script src="./assets/js/jquery-match-height.min.js"></script>
+    <!--=== jQuery Zoom Min Js ===-->
+    <script src="./assets/js/jquery-zoom.min.js"></script>
+    <!--=== Countdown Js ===-->
+    <script src="./assets/js/countdown.js"></script>
+
+    <!--=== Custom Js ===-->
+    <script src="./assets/js/custom.js"></script>
+    <!--xf-->
+    <input type="hidden" id="xf_pg" value="1000">
+
+    <script src="/xpv.js"></script>
+
+    <script type="text/javascript">
+        //ppvue initialise------------------------
+        var state = ppvue.createApp(vz).mount();
+
+        window.onpopstate = function (e) {
+            if (e.state) { if (e.state.x) { vz.xi_z = true; vz.init(e.state.x, e.state.i); } }
+        }
+        function spinner(a) {
+            var d = document.getElementById("spinner");
+            if (a) { if (d) { d.style.display = "block"; } document.body.style.cursor = "wait"; } else { if (d) { d.style.display = "none"; } document.body.style.cursor = "default"; }
+        }
+    </script>
+</body>
+
+</html>

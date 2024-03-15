@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <base href="">
+    <meta charset="utf-8" />
+    <title>Reports Portal</title>
+    <meta name="description" content="Oasis -XF Application" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="/assets/media/logos/favicon.ico" />
+    <!--ppvue -->
+    <script src="/ppvue.js"></script>
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lexend:300,400,500,600,700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap" />
+    <!--end::Fonts-->
+    <!--begin::Global Stylesheets Bundle(used by all pages)-->
+    <link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/ot.style.bundle.css" rel="stylesheet" type="text/css" />
+
+    <!--end::Global Stylesheets Bundle-->
+    <!--xls filesaver-->
+    <script type="text/javascript" src="/assets/js/xlsx_shim.min.js"></script>
+    <script type="text/javascript" src="/assets/js/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="/assets/js/FileSaver_1_3_3.js"></script>
+
+    <!--kurko calendar-->
+    <link rel="stylesheet" href="/assets/css/eventcalendar.min.css">
+    <script src="/assets/js/eventcalendar155.min.js"></script>
+    <style>
+        @page {
+            size: A4;
+            margin: 5mm;
+        }
+
+        @media print {
+            @page {
+                size: landscape;
+            }
+
+            body {
+                color: #000;
+                background-color: #fff;
+                background-image: none !important;
+            }
+
+            .col-xs-12 {
+                float: left !important;
+                padding: 4px !important;
+                max-width: 40mm;
+            }
+
+            .form-control-lg, .form-select-lg {
+                font-size: 10pt !important;
+            }
+
+
+            .no-print, no-print * {
+                display: none !important;
+            }
+        }
+
+        [v-cloak] {
+            display: none !important;
+        }
+
+        body {
+            font-family: 'Poppins', 'Lexend', Tahoma, Geneva, Verdana, sans-serif !important;
+        }
+
+
+        .form-label {
+            font-family: Lexend,sans-serif !important;
+            font-weight: 600 !important;
+        }
+
+        .mh40vh {
+            max-height: 40vh !important;
+            overflow-y: auto;
+        }
+    </style>
+    <style>
+        .tbx1 {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 9pt;
+        }
+
+            .tbx1 td, #tbx1 th {
+                border: 1px solid #ddd;
+                padding: 4px;
+            }
+
+            .tbx1 tr:nth-child(odd) {
+                background-color: #fafafa;
+            }
+
+            .tbx1 th {
+                text-align: left;
+                border-bottom: 2px solid #373737;
+                background-color: #f5f5f5;
+            }
+    </style>
+</head>
+
+<!--begin::Body-->
+<body class="app-default">
+
+    <!--begin::Theme mode setup on page load-->
+    <script src="/assets/js/custom.js"></script>
+
+
+    <div v-scope v-cloak>
+
+
+        <!--begin::LOGIN-->
+        <div id="xf_div_login" v-if="!xa.jwt">
+
+            <div class="d-flex flex-column flex-root vh-100 bg-pattern1">
+                <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+                    <div class="d-flex flex-column flex-lg-row-fluid">
+                        <div class="d-flex flex-row-fluid flex-center flex-column-auto flex-column text-center py-8">
+                            <a href="index.html" class="mb-6">
+                                <img alt="Logo" src="/assets/media/logos/oasis_logo.png" class="h-60px h-lg-150px">
+                            </a>
+                            <div class="fs-2x text-gray-200 h4 w-400px">
+                                Reports Portal
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex-row-fluid d-flex flex-center justify-content-xl-first p-10">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-center p-lg-10 p-sm-4 bg-body shadow-sm w-100 w-md-550px mx-auto ms-xl-20 bg-pattern2 rounded">
+                            <!--begin::Form-->
+                            <div class="login-content flex-lg-row-fluid d-flex flex-column justify-content-center position-relative overflow-hidden p-0 mx-auto mw-450px w-100">
+                                <div class="d-flex flex-column-fluid flex-center py-2">
+                                    <div class="w-100">
+                                        <div class="pb-2 pb-lg-6">
+                                            <h3 class="fw-bolder display-6 mb-0">Welcome</h3>
+                                            <div class="text-light lexend fw-light small">
+                                                Version: {{xfversion}}
+                                            </div>
+                                        </div>
+
+                                        <!--Login controls-->
+                                        <div>
+                                            <div v-if="!xa.mode">
+                                                <div class="mb-6">
+                                                    <label class="form-label fs-6 fw-bolder">User Name</label>
+                                                    <input class="form-control form-control-lg form-control-solid" type="text" name="username" v-model="xa.username">
+                                                </div>
+
+                                                <div class="mb-6">
+                                                    <div class="d-flex justify-content-between mt-n5">
+                                                        <label class="form-label fs-6 fw-bolder pt-5">Password</label>
+                                                    </div>
+                                                    <input class="form-control form-control-lg form-control-solid" type="password" name="password" v-model="xa.p1">
+                                                </div>
+
+                                                <div class="pb-lg-2 pb-5">
+                                                    <button type="button" class="btn btn-dark btn-lg fw-bold fs-6 px-8 py-4 my-3 me-3 w-100" v-on:click="sign_in()">Sign In</button>
+                                                </div>
+                                            </div>
+                                            <!--Reset Password controls-->
+                                            <div v-if="xa.mode==1">
+                                                <div class="mb-6">
+                                                    <label class="form-label fs-6 fw-bolder">New Password</label>
+                                                    <input class="form-control form-control-lg form-control-solid" type="password" name="password" v-model="xa.p1">
+                                                </div>
+
+                                                <div class="mb-10">
+                                                    <div class="d-flex justify-content-between mt-n5">
+                                                        <label class="form-label fs-6 fw-bolder text-dark pt-5">Re-enter Password</label>
+                                                    </div>
+                                                    <input class="form-control form-control-lg form-control-solid" type="password" name="password" v-model="xa.p2">
+                                                </div>
+                                                <div class="pb-lg-0 pb-5">
+                                                    <button v-if="xa.p1==xa.p2 && xa.p2" type="button" class="btn btn-primary fw-bolder fs-6 px-8 py-4 my-3 me-3 w-100" v-on:click="signin_reset()">Reset</button>
+                                                    <button v-else type="button" class="btn btn-primary fw-bolder fs-6 px-8 py-4 my-3 me-3 w-100" disabled>Reset</button>
+                                                </div>
+                                            </div>
+                                            <div v-if="xa.mode==2">
+                                                <div class="mb-6">
+                                                    <label class="form-label fs-6 fw-bolder">Password Changed Successfully!</label>
+                                                </div>
+                                                <div class="pb-lg-0 pb-5">
+                                                    <button type="button" class="btn btn-primary fw-bolder fs-6 px-8 py-4 my-3 me-3 w-100" v-on:click="xa.mode=0;xa.id=0;xa.username='';xa.p1='';">Continue</button>
+                                                </div>
+                                            </div>
+                                            <div v-if="xa.e" class="text-danger fw-bold mt-4">{{xa.ex}}</div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end::LOGIN-->
+
+        <div id="xf_div_app" v-bind:class="[xa.id && xa.jwt ? '':'d-none']">
+
+            <!--begin::App-->
+            <div class="d-flex flex-column flex-root app-root vh-100 bg-pattern2">
+                <div class="app-page flex-column flex-column-fluid">
+                    <!--Wrapper-->
+                    <div class="app-wrapper flex-column flex-row-fluid">
+
+                        <!--begin::APP-->
+                        <div class="app-main flex-column flex-row-fluid">
+
+                            <!--******-->
+                            <!--******-->
+                            <!--XF Default App-->
+                            <div v-if="xz.xf_entity && !xz.xf_cx">
+                                <!--begin::Save buttons-->
+                                <div class="container-fluid d-flex justify-content-between align-items-center p-2 mb-4 d-print-none" v-if="xz.xf_entity">
+                                    <div>
+                                        <h1>Reports Viewer</h1>
+                                    </div>
+                                    <div class="d-flex align-items-center  d-print-none">
+                                        <div>
+                                            <div class="btn btn-icon btn-sm btn-light btn-active-secondary me-1" title="Print" onclick="window.print();return false;">
+                                                <i class="bi bi-printer-fill text-danger"></i>
+                                            </div>
+                                        </div>
+                                        <div class="btn btn-icon btn-sm btn-light btn-active-secondary me-1" v-on:click="logout()" title="Logout"><i class="bi bi-box-arrow-right"></i></div>
+
+                                        <div class="btn btn-icon btn-sm btn-light btn-active-secondary me-1" v-on:click="refresh()" title="Refresh"><i class="bi bi-arrow-repeat"></i></div>
+
+                                        <div class="btn btn-icon btn-sm btn-light btn-active-danger" onclick="window.close()" title="Close">
+                                            <i class="bi bi-x-lg"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Save buttons-->
+
+
+                                <div class="container-fluid">
+                                    <div class="row mb-4"><h3>{{xz.xf_entityhdr}}</h3></div>
+                                </div>
+
+                                <!--xfControlTypes Loop-->
+                                <div class="d-flex flex-column flex-column-fluid py-0" :key="xz.xf_entity">
+                                    <div class="content d-flex flex-column-fluid pt-0">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div v-for="g in ui_sections()" v-bind:class="g.col" :key="g.id">
+                                                    <div v-bind:class="g.card">
+                                                        <div class="row card-body px-4 py-2">
+
+                                                            <div v-for="a in xy.xf_attr.filter(b=>g.id==xy[b].g)" :key="a" v-bind:class="xy[a].c" class="pb-4">
+
+                                                                <!--Button-->
+                                                                <div v-if="xy[a].q==1000">
+                                                                    <div class="form-label"><span v-if="xy[a].p3">{{xy[a].h}}</span>&nbsp;</div>
+                                                                    <input type="button" class="btn btn-light w-100" v-bind:id="'post_'+ a" v-on:click="xpost(a);" v-bind:value="xy[a].h" />
+                                                                </div>
+
+                                                                <!--INPUT boolean CHECKBOX-->
+                                                                <div v-if="xy[a].q==1010">
+                                                                    <label v-bind:for="'chk_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <div class="form-check form-switch pt-2">
+                                                                        <input class="form-check-input" type="checkbox" v-bind:id="'chk_'+a" v-model="xz[a]">
+                                                                        <label class="form-check-label" v-bind:for="'chk_'+a">
+                                                                            <span v-if="!xz[a]">{{ xy[a].p2 }}</span>
+                                                                            <span v-if="xz[a]">{{ xy[a].p3}}</span>
+                                                                        </label>
+                                                                        <div v-if="xy[a].p4" class="form-text">{{xy[a].p4}}</div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--INPUT textbox-->
+                                                                <div v-if="xy[a].q==0||xy[a].q==1100">
+                                                                    <label v-bind:for="'inpfl_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <input v-bind:id="'inpfl_'+a" type="text" class="form-control form-control-solid" v-model="xz[a]">
+                                                                    <div v-if="xy[a].p9" class="small text-warning">* {{xy[a].p9}}</div>
+                                                                </div>
+
+                                                                <!--INPUT Numeric textbox-->
+                                                                <div v-if="(xy[a].q==1101||xy[a].q==1105||xy[a].q==1106)">
+                                                                    <label v-bind:for="'inpfl_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <input v-bind:id="'inpfl_'+a" type="number" class="form-control form-control-solid" step=".01" v-model="xz[a]">
+                                                                </div>
+
+
+                                                                <!--Input READONLY -->
+                                                                <div v-if="xy[a].q==1125||xy[a].q==1151">
+                                                                    <label v-bind:for="'inpfl_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <input v-bind:id="'inpfl_'+a" readonly="readonly" class="form-control form-control-solid text-danger fw-bold" type="text" v-model="xz[a]">
+                                                                </div>
+                                                                <!--Date Calendar HTML5-->
+                                                                <div v-if="xy[a].q==1155">
+                                                                    <label v-bind:for="'inpfl_'+a" class="form-label" v-on:click="xz[a]=null">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <input v-if="xy[a].p5" v-bind:id="'inpfl_'+a" readonly="readonly" class="form-control form-control-solid" type="date" v-model="xz[a]">
+                                                                    <input v-else v-bind:id="'inpfl_'+a" class="form-control form-control-solid" type="date" v-model="xz[a]">
+                                                                </div>
+
+
+                                                                <!--TimePicker -->
+                                                                <div v-if="xy[a].q==1158">
+                                                                    <div @vue:mounted="xc[a]=timeToStr(xz[a])">
+                                                                        <label v-bind:for="'chk_'+a" class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                        <input class="form-control form-control-solid" type="time" v-model="xc[a]" v-on:change="xz[a]=timeToMins(xc[a])">
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!--Event Calendar Auto - Kurko-->
+                                                                <div v-if="xy[a].q==1156">
+                                                                    <div id="calendar" @vue:mounted="eventCalendarInit($el, a)" @vue:unmounted="xc[a]={};"></div>
+                                                                    <span v-if="xz.xf_z>1" class="d-none" v-effect="xc[a].setOption('events', xy[a].p10)"></span>
+                                                                </div>
+
+                                                                <!--FK DDL-->
+                                                                <div v-if="xy[a].q==1303">
+                                                                    <label class="form-label" v-on:click="redirect(xy[a].p2,xz[a])">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <select class="form-select form-select-solid" v-model="xz[a]" v-on:change="xpost_if(xy[a].p5)">
+                                                                        <option v-if="!xy[a].p4" value="-2">--</option>
+                                                                        <option v-for="x1 in xy[a].p10" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                    </select>
+                                                                </div>
+
+
+                                                                <!--DDL KV CSVList-->
+                                                                <div v-if="xy[a].q==1310">
+                                                                    <label class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <div v-if="xy[a].p10">
+                                                                        <select class="form-select form-select-solid" v-model="xz[a]">
+                                                                            <option v-for="k in xy[a].p10" v-bind:value="k">{{k}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!--DDL KV-->
+                                                                <div v-if="xy[a].q==1318">
+                                                                    <label class="form-label">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                    <div v-if="xy[a].p10">
+                                                                        <select class="form-select form-select-solid" v-model="xz[a]">
+                                                                            <option v-for="x1 in xy[a].p10" v-bind:value="x1.v">{{x1.k}}</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <!-- FK popup 1320-->
+                                                                <div v-if="xy[a].q==1320">
+                                                                    <div v-if="xy[a].p1.length>0">
+                                                                        <div>
+                                                                            <label class="form-label me-2 text-hover-primary cursor-pointer">{{xy[a].h}}<i class="bi bi-record-fill ms-2 text-danger" v-if="xy[a].a"></i></label>
+                                                                            <span class="cursor-pointer text-hover-danger" v-show="!xy[a].p8" v-on:click="xz[a]=-1;xy[a].p1=[];q_loc=[];"><i class="bi bi-chevron-down"></i></span>
+                                                                        </div>
+                                                                        <div class="table-responsive mh-100px">
+                                                                            <table class="table table-condensed align-middle table-row-dashed no-footer mb-1">
+                                                                                <thead class="bg-gray-200 fw-bold fs-8" v-show="!xy[a].p9">
+                                                                                    <tr>
+                                                                                        <th class="text-start text-gray-600 text-uppercase p-1" v-for="key in objKeys(xy[a].p1[0])">{{key}}</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <tr v-for="A in xy[a].p1" class="text-hover-primary cursor-pointer" v-on:click="redirect(xy[a].p2,xz[a])">
+                                                                                        <td class="p-1" v-for="key in objKeys(A)">{{A[key]}}</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div v-if="xy[a].p1.length==0" class="dropdown">
+                                                                        <div data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+                                                                            <label class="form-label me-2">{{xy[a].h}}</label>
+                                                                            <i class="bi bi-search text-primary" v-if="!xy[a].p4" v-on:click="xqry('?',xy[a].p2,'local',xy[a].p3);xy[a].p4='?';"></i>
+                                                                            <i class="bi bi-x-circle text-danger" v-if="xy[a].p4" v-on:click="xy[a].p4='';q_loc=[];xz[a]=-1;"></i>
+                                                                            <input type="text" class="form-control form-control-sm" placeholder="Search.." v-model="xy[a].p4" v-on:keyup="xqry(xy[a].p4,xy[a].p2,'local',xy[a].p3,50)" />
+                                                                        </div>
+
+                                                                        <div class="dropdown-menu w-100 px-1" data-bs-dismiss="dropdown">
+                                                                            <div class="table-responsive mh-300px">
+                                                                                <table class="table table-condensed table-hover align-middle table-row-dashed no-footer mb-1">
+                                                                                    <thead class="border-bottom border-gray-200 fs-7 fw-bold">
+                                                                                        <tr>
+                                                                                            <th class="text-start text-muted text-uppercase p-1" v-for="key in objKeys(q_loc[0])">{{key}}</th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr v-for="A in q_loc" class="cursor-pointer" v-on:click="q_loc=[];xz[a]=A.xf_id;xy[a].p1.push(A);xy[a].p4=''; xpost_if(xy[a].p5);">
+                                                                                            <td class="p-1" v-for="key in objKeys(A)">{{A[key]}}</td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                                <!--DATAGRID component-->
+
+                                                                <div v-if="xy[a].q==1550||xy[a].q==1504">
+                                                                    <div class="d-flex justify-content-between align-items-center mt-2" v-if="!xy[a].p7">
+                                                                        <div class="form-label"><span v-if="!xy[a].x.hideHeader">{{xy[a].h}}</span></div>
+                                                                        <div v-if="xy[a].p10">
+                                                                            <span v-if="xy[a].p10.length>1" v-on:click="saveToExcel(xy[a].p10)" class="btn badge p-1 text-center me-2 d-print-none" title="Download as XLS">
+                                                                                <i class="bi bi-cloud-arrow-down p-0"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="table-responsive mb-2" v-bind:class="xy[a].p6" v-if="xy[a].p10">
+                                                                        <table class="tbx1 align-middle my-1">
+                                                                            <thead class="border-bottom border-gray-200 fs-7 bg-light fw-bold">
+                                                                                <tr>
+                                                                                    <th class="text-start text-uppercase cursor-pointer p-2"
+                                                                                        v-on:click="sortTable(xy[a].p10,key,1)" v-for="key in objKeys(xy[a].p10[0])">{{key}}</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody class="small">
+                                                                                <tr v-for="A in xy[a].p10">
+                                                                                    <td class="p-2" v-for="key in objKeys(A)">
+                                                                                        {{A[key]}}
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <!--//custom controls-->
+
+
+                                                                <div v-if="xy[a].q==100">
+
+
+
+                                                                    <!--Trips/driver report-->
+                                                                    <div v-if="xz.xf_entity=='ot_rep_trips1'&& a=='data'">
+                                                                        <div v-for="B in xy[a].p10[1]">
+                                                                            <div class="pb-4">
+                                                                                <div class="h4">
+                                                                                    <span class="me-2 text-primary">{{B.Driver}}</span>
+                                                                                    <span>{{B.Vehicle}}</span>
+                                                                                </div>
+                                                                                <div class="small">
+                                                                                    <div>{{B.tour}}</div>
+                                                                                    <div><span class="fw-bold me-2">{{B['Tour Date']}}</span>Trip#:{{B['trip#']}}</div>
+                                                                                </div>
+
+                                                                                <div class="table-responsive mb-2" v-if="xy[a].p10[0]">
+                                                                                    <table class="tbx1 align-middle my-1">
+                                                                                        <thead class="border-bottom border-gray-200 fs-7 bg-light fw-bold">
+                                                                                            <tr>
+                                                                                                <th class="text-start text-muted text-uppercase p-2"
+                                                                                                    v-for="key in objKeys(xy[a].p10[0][0]).filter(e=>!(e=='tripcc'||e=='trip_'))">{{key}}</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody class="small">
+                                                                                            <tr v-for="C in xy[a].p10[0].filter(f=>f.trip_==B.xf_id)">
+                                                                                                <td class="p-2" v-for="key in objKeys(C).filter(e=>!(e=='tripcc'||e=='trip_'))">
+                                                                                                    {{C[key]}}
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+
+
+
+                                                                    <!--salesrep commission report-->
+                                                                    <div v-if="xz.xf_entity=='ot_rep_bookings3'&& a=='data'">
+                                                                        <div v-for="B in xy[a].p10[1]">
+                                                                            <div class="pb-4">
+                                                                                <div class="h4">
+                                                                                    <span class="me-2 text-primary">{{B.name}}</span>
+                                                                                </div>
+
+                                                                                <div class="table-responsive mb-2" v-if="xy[a].p10[0]">
+                                                                                    <table class="tbx1 align-middle my-1">
+
+                                                                                        <colgroup>
+                                                                                            <col style="width:75px;">
+                                                                                            <col style="width:75px;">
+                                                                                            <col style="width:125px;">
+                                                                                            <col style="width:75px;">
+                                                                                            <col style="width:60px;">
+                                                                                            <col>
+                                                                                            <col style="width:60px;">
+                                                                                            <col style="width:60px;">
+                                                                                            <col style="width:60px;">
+                                                                                            <col style="width:60px;">
+                                                                                            <col style="width:60px;">
+                                                                                            <col style="width:60px;">
+                                                                                            <col style="width:60px;">
+                                                                                            <col style="width:60px;">
+                                                                                            <col style="width:60px;">
+                                                                                            <col style="width:80px;">
+                                                                                            <col style="width:180px;">
+                                                                                        </colgroup>
+
+                                                                                        <thead class="border-bottom border-gray-200 fs-7 bg-light fw-bold">
+                                                                                            <tr>
+                                                                                                <th class="text-muted text-uppercase p-1"
+                                                                                                    v-for="key in objKeys(xy[a].p10[0][0]).filter(e=>!(e=='tripcc'||e=='salesrep_'))">{{key}}</th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody class="small">
+
+                                                                                            <tr v-for="C in xy[a].p10[0].filter(f=>f.salesrep_==B.salesrep_)">
+                                                                                                <td class="p-1" v-for="key in objKeys(C).filter(e=>!(e=='tripcc'||e=='salesrep_'))">
+                                                                                                    <div v-bind:class="[isNaN(C[key]) ?'text-start':'text-end']">{{C[key]}}</div>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tbody>
+                                                                                        <tfoot>
+                                                                                            <tr>
+                                                                                                <td class="text-end p-1"
+                                                                                                    v-for="key in objKeys(xy[a].p10[0][0]).filter(e=>!(e=='tripcc'||e=='salesrep_'))">
+                                                                                                    <span class="fw-bold text-dark" v-if="key=='Total'">{{B.Total.toFixed(2)}}</span>
+                                                                                                    <span class="fw-bold text-dark" v-if="key=='Net'">{{B.Net.toFixed(2)}}</span>
+                                                                                                    <span class="fw-bold text-dark" v-if="key=='Commission'">{{B.Commission.toFixed(2)}}</span>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        </tfoot>
+                                                                                    </table>
+                                                                                </div>
+
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!--******-->
+
+                        </div>
+                        <!--end::APP-->
+                    </div>
+
+
+                </div>
+
+
+
+                <!------>
+                <!--Error Notification-->
+                <div id="xferrornotification" class="fixed-bottom w-100 p-2" v-show="e" v-on:click="alertdismiss()">
+                    <div v-bind:class="[e==1 ?'bg-success rounded p-4':'bg-danger rounded p-4']">
+                        <span v-if="e==1">
+                            <i class="bi bi-chat-right-text text-white fs-3"></i>
+                            <span class="fs-5 text-white mx-4">{{ex}}</span>
+                        </span>
+                        <span v-if="e==-1" class="fw-bold fs-4">
+                            <i class="bi bi-exclamation-circle text-white fs-3"></i>
+                            <span class="fw-bolder text-danger mx-1">Error</span>
+                            <span class="fs-5 text-white mx-4">{{ex}}</span>
+                        </span>
+                        <span class="fs-4">
+                            <i class="bi bi-x text-white"></i>
+                        </span>
+                    </div>
+                </div>
+                <!------------------------------------------------------------->
+
+
+            </div>
+            <!--begin::Spinner-->
+            <div id="spinner" class="position-absolute vh-100 vw-100 top-0">
+                <div class="position-absolute top-50 start-50"><span class="spinner-border h-15px w-15px align-middle text-gray-400"></span></div>
+            </div>
+
+            <!--begin::Scrolltop-->
+            <div id="kt_scrolltop" class="scrolltop" data-kt-scrolltop="true">
+                <!--begin::Svg Icon | path: icons/duotone/Navigation/Up-2.svg-->
+                <span class="svg-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <polygon points="0 0 24 0 24 24 0 24" />
+                            <rect fill="#000000" opacity="0.5" x="11" y="10" width="2" height="10" rx="1" />
+                            <path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
+                        </g>
+                    </svg>
+                </span>
+                <!--end::Svg Icon-->
+            </div>
+            <!--end::Scrolltop-->
+        </div>
+
+        <!--Initialise on mount-->
+        <div @vue:mounted="jwt_sign_in()"></div>
+
+        <!--Initialise on mount-->
+        <div @vue:mounted="init(localStorage.getItem('xf_rde'),localStorage.getItem('xf_rdi'))"></div>
+    </div>
+
+
+
+    <!--end::Main-->
+    <!--begin::Javascript-->
+    <!--begin::Global Javascript Bundle(used by all pages)-->
+    <script src="/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Page Custom Javascript(used by this page)-->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="/assets/js/widgets.js"></script>
+
+    <!--end::Page Custom Javascript-->
+
+    <script src="/xpv.js"></script>
+
+    <script type="text/javascript">
+
+        //ppvue initialise------------------------
+        var state = ppvue.createApp(vz).mount();
+
+        window.onpopstate = function (e) {
+            if (e.state) { if (e.state.x) { vz.xi_z = true; vz.init(e.state.x, e.state.i); } }
+        }
+        function spinner(a) {
+            var d = document.getElementById("spinner");
+            if (a) { if (d) { d.style.display = "block"; } document.body.style.cursor = "wait"; } else { if (d) { d.style.display = "none"; } document.body.style.cursor = "default"; }
+        }
+
+
+        //kurko calendar render function
+        function eventCalendarInit(el, a) {
+            vz.xc[a] = new EventCalendar(el, {
+                view: "dayGridMonth",
+                date: vz.xz[a],
+                height: "680px",
+                headerToolbar: {
+                    start: 'prev,next today',
+                    center: 'title',
+                    end: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                eventTimeFormat: { hour: '2-digit', minute: '2-digit' },
+                slotDuration: '00:15:00', slotMinTime: '06:30:00', slotMaxTime: '21:30:00',
+                events: vz.xy[a].p10,
+                dayMaxEvents: false,
+                nowIndicator: true,
+                selectable: false,
+                eventClick: function (info) {
+                    vz.redirect(vz.xy[a].p2, info.event.id);
+                },
+                datesSet: function (info) {
+                    if (vz.xz.xf_z) { vz.xz[a] = info.view.activeStart.toISOString(); vz.xpost(); } else { vz.xz.xf_z = 1; }
+                }
+            });
+        }
+    </script>
+
+
+
+</body>
+<!--end::Body-->
+</html>
